@@ -1,0 +1,17 @@
+# GitHub-only Configuration
+# This file is conditionally included from ~/.gitconfig
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  allowedSignersFile = ~/.config/git/allowed-signers
+
+[commit]
+  gpgSign = true
+
+[tag]
+  gpgSign = true
+
+[user]
+  signingkey = ~/.ssh/github-signing

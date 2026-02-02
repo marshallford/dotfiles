@@ -1,0 +1,30 @@
+{
+  "accessibility.verboseChatProgressUpdates": false,
+  "chat.tools.urls.autoApprove": {
+    "https://github.com": {
+      "approveRequest": true,
+      "approveResponse": true
+    }
+  },
+  "chat.viewSessions.orientation": "stacked",
+  "editor.fontFamily": "JetBrainsMono Nerd Font",
+  "editor.fontLigatures": true,
+  "editor.minimap.enabled": false,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "extensions.ignoreRecommendations": true,
+  "files.autoSave": "onFocusChange",
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": false,
+    "scminput": false
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "update.mode": "none",
+  "update.showReleaseNotes": false,
+  "vsicons.dontShowNewVersionMessage": true,
+  "workbench.colorTheme": "One Dark Pro Darker",
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.startupEditor": "none"
+}

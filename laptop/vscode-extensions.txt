@@ -1,0 +1,11 @@
+editorconfig.editorconfig
+github.copilot
+github.copilot-chat
+golang.go
+hashicorp.terraform
+matthewpi.caddyfile-support
+pomdtr.excalidraw-editor
+tsandall.opa
+vscode-icons-team.vscode-icons
+yzhang.markdown-all-in-one
+zhuangtongfa.material-theme

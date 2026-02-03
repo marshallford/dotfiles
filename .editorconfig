@@ -12,5 +12,8 @@ insert_final_newline = true
 [GNUmakefile]
 indent_style = tab
 
+[*.md]
+indent_size = 4
+
 [*.kdl]
 indent_size = 4

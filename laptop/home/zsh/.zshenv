@@ -11,4 +11,4 @@ export GOPATH="$HOME/.go"
 # PATH
 typeset -U path PATH
 [[ -d $HOME/.local/bin ]] && path=($HOME/.local/bin $path)
-[[ -d $HOME/$GOPATH/bin ]] && path=($HOME/$GOPATH/bin $path)
+[[ -d $GOPATH/bin ]] && path=($GOPATH/bin $path)

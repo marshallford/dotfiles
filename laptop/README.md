@@ -8,7 +8,7 @@
 2. Follow https://wiki.archlinux.org/title/Install_Arch_Linux_via_SSH
 3. Follow steps below (based on https://gist.github.com/yovko/512326b904d120f3280c163abfbcb787)
 
-```
+```shell
 fdisk -l # ensure nvme0n1 is the correct disk
 
 sgdisk --zap-all /dev/nvme0n1
@@ -90,7 +90,7 @@ reboot
 
 ## After reboot setup
 
-```
+```shell
 mkdir -p /etc/pacman.d/hooks
 nano /etc/pacman.d/hooks/99-limine.hook # system/setup package
 echo "--save /etc/pacman.d/mirrorlist --protocol https --age 2 --fastest 5 --number 10 --sort rate --ipv4" > /etc/xdg/reflector/reflector.conf
@@ -108,7 +108,7 @@ systemctl enable --now fstrim.timer
 
 ## Create user
 
-```
+```shell
 useradd -s /bin/zsh -mG wheel marshall
 passwd marshall
 EDITOR=nano visudo # Uncomment "%wheel ALL=(ALL:ALL) ALL"
@@ -117,7 +117,7 @@ reboot # to avoid PAM issues, at the very least logout and connect/login as mars
 
 ## Install yay
 
-```
+```shell
 cd ~
 mkdir -p .config/pacman
 nano .config/pacman/makepkg.conf # home/pacman package
@@ -127,13 +127,13 @@ cd ~ && rm -rf yay
 
 ## Fonts
 
-```
+```shell
 yay -Syu noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd
 ```
 
 Windows fonts
 
-```
+```shell
 yay -Syu ttf-ms-win11 # should fail
 sudo mount /dev/nvme1n1p2 /mnt
 cp /mnt/Windows/{Fonts/*.{ttf,ttc},System32/Licenses/neutral/*/*/license.rtf} ~/.cache/yay/ttf-ms-win11/
@@ -144,13 +144,13 @@ rm -rf ~/.cache/yay/ttf-ms-win11
 
 ## Audio
 
-```
+```shell
 yay -Syu wireplumber pipewire pipewire-alsa pipewire-jack pipewire-pulse
 ```
 
 ## Network
 
-```
+```shell
 yay -Syu networkmanager
 sudo systemctl disable --now systemd-networkd
 sudo rm /etc/systemd/network/20-wired.network
@@ -161,7 +161,7 @@ systemctl --user enable --now ssh-agent.service
 
 ## Shell/DE
 
-```
+```shell
 yay -Syu niri uwsm nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard
 yay -Syu dms-shell-bin accountsservice dgop-bin quickshell-git cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct adw-gtk-theme
 systemctl --user add-wants niri.service dms
@@ -171,7 +171,7 @@ dms setup # may need to `rm -rf ~/.config/niri` first
 
 ## Display/Login Manager
 
-```
+```shell
 yay -Syu greetd greetd-dms-greeter-git
 sudo nano /etc/greetd/config.toml # system/setup package
 sudo nano /etc/pam.d/greetd # system/setup package
@@ -182,7 +182,7 @@ dms greeter sync
 
 ## CLI Applications
 
-```
+```shell
 yay -Syu jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops tfenv nvm go docker podman
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
@@ -192,7 +192,7 @@ sudo usermod -aG docker ${USER}
 
 ## Desktop applications
 
-```
+```shell
 yay -Syu vlc vlc-plugins-all chromium ghostty visual-studio-code-bin spotify-launcher slack-desktop discord loupe file-roller baobab seahorse
 ```
 
@@ -203,7 +203,7 @@ yay -Syu vlc vlc-plugins-all chromium ghostty visual-studio-code-bin spotify-lau
 
 ## Dotfiles
 
-```
+```shell
 cd ~/Documents/dotfiles # root of dotfiles repository
 cd laptop # machine
 sudo stow -d system -t / podman

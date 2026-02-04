@@ -91,6 +91,7 @@ alias grep='grep --color=auto'
 alias pbcopy='wl-copy'
 alias pbpaste='wl-paste'
 alias g='git'
+alias k='kubectl'
 alias export-vscode-extensions="code --list-extensions > $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt"
 alias import-vscode-extensions="cat $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt | xargs -L 1 code --install-extension"
 alias updater='yay -Syu'

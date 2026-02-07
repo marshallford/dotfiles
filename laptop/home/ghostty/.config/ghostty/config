@@ -14,9 +14,6 @@ background-blur-radius = 32
 cursor-style = block
 cursor-style-blink = true
 
-# Scrollback
-scrollback-limit = 3023
-
 # Terminal features
 mouse-hide-while-typing = true
 copy-on-select = false
@@ -31,7 +28,8 @@ keybind = ctrl+v=paste_from_clipboard
 keybind = ctrl+t=new_tab
 keybind = ctrl+w=close_tab
 
-# Material 3 UI elements
+# Theming
+theme = Atom One Dark
 unfocused-split-opacity = 0.7
 unfocused-split-fill = #44464f
 
@@ -43,8 +41,5 @@ shell-integration = detect
 shell-integration-features = cursor,sudo,title,no-cursor
 keybind = shift+enter=text:\n
 
-# Rando stuff
+# Misc
 gtk-single-instance = true
-
-# Dank color generation
-theme = Atom One Dark

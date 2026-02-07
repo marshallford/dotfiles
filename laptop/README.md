@@ -206,16 +206,11 @@ yay -Syu vlc vlc-plugins-all chromium ghostty visual-studio-code-bin spotify-lau
 ```shell
 cd ~/Documents/dotfiles # root of dotfiles repository
 cd laptop # machine
-sudo stow -d system -t / podman
+sudo stow -d system -t / podman restic-backup
 stow -d home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform vscode zsh
 ```
 
 ## TODO
 
 1. Misc networking: mDNS, Avahi, CUPS
-2. Restic backups, Backblaze?
-3. UWSM configuration in DMS
-4. Restore GPG keys
-5. Git switch and restore
-6. AWS configuration
-7. Correct editorconfig file in other repositories
+2. UWSM configuration in DMS

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# This script intentionally does NOT source any env files.
+# Systemd should inject configuration via EnvironmentFile directives.
+
+run() {
+  local restic=(/usr/bin/restic -r "$1" -p "/etc/restic-backup/password.txt" --cache-dir "/var/cache/restic-backup")
+
+  "${restic[@]}" backup -x -H dell-pro-max-16-premium --tag arch-linux,laptop --files-from /etc/restic-backup/paths.txt --exclude-file /etc/restic-backup/excludes.txt
+  "${restic[@]}" forget --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6
+  "${restic[@]}" check
+}
+
+# Targets:
+# - b2: Backblaze B2 via S3-compatible storage
+# - nas: local NAS via SFTP
+# - both: run both sequentially
+RESTIC_TARGETS="${RESTIC_TARGETS:-both}"
+
+case "$RESTIC_TARGETS" in
+  nas)
+    : "${RESTIC_REPOSITORY_NAS:?RESTIC_REPOSITORY_NAS must be set}"
+    run "$RESTIC_REPOSITORY_NAS"
+    ;;
+  b2)
+    : "${RESTIC_REPOSITORY_B2:?RESTIC_REPOSITORY_B2 must be set}"
+    : "${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID must be set}"
+    : "${AWS_SECRET_ACCESS_KEY:?AWS_SECRET_ACCESS_KEY must be set}"
+    run "$RESTIC_REPOSITORY_B2"
+    ;;
+  both)
+    : "${RESTIC_REPOSITORY_NAS:?RESTIC_REPOSITORY_NAS must be set}"
+    : "${RESTIC_REPOSITORY_B2:?RESTIC_REPOSITORY_B2 must be set}"
+    : "${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID must be set}"
+    : "${AWS_SECRET_ACCESS_KEY:?AWS_SECRET_ACCESS_KEY must be set}"
+    run "$RESTIC_REPOSITORY_NAS"
+    run "$RESTIC_REPOSITORY_B2"
+    ;;
+  *)
+    echo "Invalid RESTIC_TARGETS='$RESTIC_TARGETS' (expected: b2|nas|both)" >&2
+    exit 2
+    ;;
+esac

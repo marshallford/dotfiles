@@ -14,10 +14,10 @@ fdisk -l # ensure nvme0n1 is the correct disk
 sgdisk --zap-all /dev/nvme0n1
 
 parted --script /dev/nvme0n1 \
-  mklabel gpt \
-  mkpart ESP fat32 1MiB 4097MiB \
-  set 1 esp on \
-  mkpart Linux btrfs 4097MiB 100%
+mklabel gpt \
+mkpart ESP fat32 1MiB 4097MiB \
+set 1 esp on \
+mkpart Linux btrfs 4097MiB 100%
 
 mkfs.fat -n ESP -F 32 /dev/nvme0n1p1
 

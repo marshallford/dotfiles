@@ -6,18 +6,18 @@
 //
 // NOTE: Changing this file requires a restart of VS Code.
 {
-	// Use software rendering instead of hardware accelerated rendering.
-	// This can help in cases where you see rendering issues in VS Code.
-	// "disable-hardware-acceleration": true,
+  // Use software rendering instead of hardware accelerated rendering.
+  // This can help in cases where you see rendering issues in VS Code.
+  // "disable-hardware-acceleration": true,
 
-	// Allows to disable crash reporting.
-	// Should restart the app if the value is changed.
-	"enable-crash-reporter": true,
+  // Allows to disable crash reporting.
+  // Should restart the app if the value is changed.
+  "enable-crash-reporter": true,
 
-	// Unique id used for correlating crash reports sent from this instance.
-	// Do not edit this value.
-	"crash-reporter-id": "d0c9993e-e75e-445a-a7c5-e6b39e640800",
+  // Unique id used for correlating crash reports sent from this instance.
+  // Do not edit this value.
+  "crash-reporter-id": "d0c9993e-e75e-445a-a7c5-e6b39e640800",
 
-	// https://code.visualstudio.com/docs/configure/settings-sync#_recommended-configure-the-keyring-to-use-with-vs-code
-	"password-store":"gnome-libsecret"
+  // https://code.visualstudio.com/docs/configure/settings-sync#_recommended-configure-the-keyring-to-use-with-vs-code
+  "password-store":"gnome-libsecret"
 }

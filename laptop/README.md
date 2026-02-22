@@ -163,7 +163,7 @@ systemctl --user enable --now ssh-agent.service
 
 ```shell
 yay -Syu niri uwsm nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard
-yay -Syu dms-shell-bin accountsservice dgop-bin quickshell-git cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct adw-gtk-theme
+yay -Syu dms-shell-bin accountsservice dgop-bin quickshell-git cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct adw-gtk-theme cups-pk-helper kimageformats
 systemctl --user add-wants niri.service dms
 dms setup # may need to `rm -rf ~/.config/niri` first
 ```

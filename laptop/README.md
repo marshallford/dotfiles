@@ -44,7 +44,7 @@ mount --mkdir -o compress=zstd:1,noatime,subvol=@snapshots /dev/mapper/root /mnt
 mount --mkdir /dev/nvme0n1p1 /mnt/boot
 
 pacman -Syy
-pacstrap -K /mnt base base-devel linux linux-firmware sof-firmware intel-ucode btrfs-progs ntfs-3g exfatprogs efibootmgr limine cryptsetup util-linux plymouth openssh rsync git nano reflector
+pacstrap -K /mnt base base-devel linux linux-lts linux-firmware sof-firmware intel-ucode wireless-regdb btrfs-progs ntfs-3g exfatprogs efibootmgr limine cryptsetup util-linux plymouth openssh git nano reflector
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -53,9 +53,11 @@ arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
 hwclock --systohc
 
-nano /etc/locale.gen # Uncomment the UTF-8 locales you will be using, example: "en_US.UTF-8 UTF-8"
+nano /etc/locale.gen # Uncomment the UTF-8 locales you will be using, example: 'en_US.UTF-8 UTF-8'
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+nano /etc/conf.d/wireless-regdom # Uncomment the appropriate domain, example: 'WIRELESS_REGDOM="US"'
 
 echo dell > /etc/hostname
 
@@ -183,7 +185,7 @@ dms greeter sync
 ## CLI Applications
 
 ```shell
-yay -Syu jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops tfenv nvm go uv docker docker-compose podman
+yay -Syu rsync jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops tfenv nvm go uv docker docker-compose podman
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}

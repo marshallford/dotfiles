@@ -1,10 +1,9 @@
 {
   "accessibility.verboseChatProgressUpdates": false,
   "chat.tools.urls.autoApprove": {
-    "https://github.com": {
-      "approveRequest": true,
-      "approveResponse": true
-    }
+    "https://github.com": true,
+    "https://*.githubusercontent.com": true,
+    "https://*.hashicorp.com": true
   },
   "chat.viewSessions.orientation": "stacked",
   "diffEditor.ignoreTrimWhitespace": false,

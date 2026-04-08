@@ -185,7 +185,7 @@ dms greeter sync
 ## CLI Applications
 
 ```shell
-yay -Syu rsync ripgrep jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops tfenv nvm go uv docker docker-compose podman
+yay -Syu ethtool pacman-contrib rsync ripgrep jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops tfenv nvm go uv docker docker-compose podman
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}

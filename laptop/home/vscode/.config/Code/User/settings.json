@@ -27,5 +27,9 @@
   "vsicons.dontShowNewVersionMessage": true,
   "workbench.colorTheme": "One Dark Pro Darker",
   "workbench.iconTheme": "vscode-icons",
-  "workbench.startupEditor": "none"
+  "workbench.startupEditor": "none",
+  "chat.tools.terminal.autoApprove": {
+    "make": true,
+    "go": true
+  }
 }

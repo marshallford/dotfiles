@@ -121,7 +121,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"^gnome-calculator$"#
+    match app-id=r#"^org\.gnome\.Calculator$"#
     match app-id=r#"^galculator$"#
     match app-id=r#"^blueman-manager$"#
     // match app-id=r#"^org\.gnome\.Nautilus$"#

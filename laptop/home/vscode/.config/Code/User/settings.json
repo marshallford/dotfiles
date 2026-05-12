@@ -1,9 +1,13 @@
 {
   "accessibility.verboseChatProgressUpdates": false,
   "chat.tools.urls.autoApprove": {
+    "https://code.visualstudio.com": true,
+    "https://github.com/microsoft/vscode/wiki/*": true,
     "https://github.com": true,
     "https://*.githubusercontent.com": true,
-    "https://*.hashicorp.com": true
+    "https://*.hashicorp.com": true,
+    "https://*.k8s.io": true,
+    "https://spiffe.io": true
   },
   "chat.viewSessions.orientation": "stacked",
   "diffEditor.ignoreTrimWhitespace": false,
@@ -31,5 +35,6 @@
   "chat.tools.terminal.autoApprove": {
     "make": true,
     "go": true
-  }
+  },
+  "claudeCode.preferredLocation": "panel"
 }

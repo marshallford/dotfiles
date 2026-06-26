@@ -161,10 +161,18 @@ sudo systemctl enable --now bluestooth
 systemctl --user enable --now ssh-agent.service
 ```
 
+## Devices
+
+```shell
+nano /etc/udev/rules.d/50-keychron.rules # system/setup package
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
 ## Shell/DE
 
 ```shell
-yay -Sy dms-shell-niri quickshell-git uwsm nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
+yay -Sy dms-shell-niri uwsm nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
 systemctl --user add-wants niri.service dms
 dms setup # may need to `rm -rf ~/.config/niri` first
 ```
@@ -183,7 +191,7 @@ dms greeter sync
 ## CLI Applications
 
 ```shell
-yay -Sy ethtool pacman-contrib rsync ripgrep jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops tfenv nvm go uv docker docker-compose podman kind istio cilium-cli
+yay -Sy ethtool wavemon nmap pacman-contrib rsync ripgrep jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops tfenv rustup nvm go uv bats docker docker-compose podman kind istio cilium-cli
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}

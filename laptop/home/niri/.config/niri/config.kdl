@@ -158,7 +158,7 @@ window-rule {
 
 window-rule {
     match app-id="chromium"
-    scroll-factor 0.1
+    // scroll-factor 0.1
 }
 
 debug {

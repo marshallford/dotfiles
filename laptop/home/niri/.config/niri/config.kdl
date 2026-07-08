@@ -20,6 +20,10 @@ input {
         dwtp
         natural-scroll
     }
+    mouse {
+        accel-profile "flat"
+        accel-speed -0.5
+    }
     warp-mouse-to-focus
 }
 

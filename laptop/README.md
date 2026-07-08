@@ -164,7 +164,8 @@ systemctl --user enable --now ssh-agent.service
 ## Devices
 
 ```shell
-nano /etc/udev/rules.d/50-keychron.rules # system/setup package
+sudo nano /etc/udev/rules.d/50-keychron.rules # system/setup package
+sudo nano /etc/udev/rules.d/50-nuphy.rules # system/setup package
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
@@ -180,7 +181,7 @@ dms setup # may need to `rm -rf ~/.config/niri` first
 ## Display/Login Manager
 
 ```shell
-yay -Sy greetd greetd-dms-greeter-git
+yay -Sy greetd-dms-greeter-bin
 sudo nano /etc/greetd/config.toml # system/setup package
 sudo nano /etc/pam.d/greetd # system/setup package
 sudo nano /etc/pam.d/passwd # system/setup package
@@ -215,7 +216,7 @@ yay -Sy vlc vlc-plugins-all chromium ghostty visual-studio-code-bin spotify-laun
 cd ~/Documents/dotfiles # root of dotfiles repository
 cd laptop # machine
 sudo stow -d system -t / podman restic-backup
-stow -d home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform vscode zsh
+stow -d home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform vscode xdg-defaults zsh
 ```
 
 ## TODO

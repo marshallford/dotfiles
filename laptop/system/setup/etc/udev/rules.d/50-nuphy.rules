@@ -1,0 +1,4 @@
+# NuPhy Air75 V3 (wired)
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="19f5", ATTRS{idProduct}=="1028", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
+# NuPhy Air75 V3 Dongle (2.4GHz)
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="19f5", ATTRS{idProduct}=="2620", MODE="0666", TAG+="uaccess", TAG+="udev-acl"

@@ -1,6 +1,5 @@
+anthropic.claude-code
 editorconfig.editorconfig
-github.copilot
-github.copilot-chat
 golang.go
 hashicorp.terraform
 matthewpi.caddyfile-support

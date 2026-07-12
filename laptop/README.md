@@ -111,7 +111,7 @@ systemctl enable --now fstrim.timer
 ## Create user
 
 ```shell
-useradd -s /bin/zsh -mG wheel marshall
+useradd -s /bin/zsh -mG wheel input marshall
 passwd marshall
 EDITOR=nano visudo # Uncomment "%wheel ALL=(ALL:ALL) ALL"
 reboot # to avoid PAM issues, at the very least logout and connect/login as marshall

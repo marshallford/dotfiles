@@ -7,6 +7,7 @@ export LESSHISTFILE='-'
 export DOTFILES="$HOME/Documents/Projects/dotfiles"
 export DOTFILES_MACHINE='laptop'
 export GOPATH="$HOME/.go"
+export TFENV_CONFIG_DIR="$HOME/.tfenv"
 
 # PATH
 typeset -U path PATH

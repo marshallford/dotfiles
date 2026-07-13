@@ -44,9 +44,9 @@ zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-dir
 zstyle '*' single-ignored show                                                                              # show the lone ignored match instead of hiding it
 
 # Keybindings
-bindkey -e                                       # use emacs-style editing
-bindkey '^r' history-incremental-search-backward # reverse history search with Ctrl-R
-bindkey ' '  magic-space                         # expand history on space
+bindkey -e                                               # use emacs-style editing
+bindkey '^r' history-incremental-pattern-search-backward # reverse history search with Ctrl-R
+bindkey ' '  magic-space                                 # expand history on space
 
 (( ${+terminfo[kcbt]} )) && bindkey "${terminfo[kcbt]}" reverse-menu-complete # shift-tab cycles completion backward
 (( ${+terminfo[kcuu1]} )) && bindkey "${terminfo[kcuu1]}" up-line-or-search   # move up a line in multiline input, otherwise do a loose history search
@@ -92,9 +92,10 @@ alias pbcopy='wl-copy'
 alias pbpaste='wl-paste'
 alias g='git'
 alias k='kubectl'
+alias h='history 0 | grep -i'
 alias export-vscode-extensions="code --list-extensions > $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt"
 alias import-vscode-extensions="cat $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt | xargs -L 1 code --install-extension"
-alias updater='yay -Syu'
+alias updater='yay'
 alias cleaner='yay -Rns $(pacman -Qtdq)'
 alias repo-updater='sudo reflector --save /etc/pacman.d/mirrorlist --protocol https --age 2 --fastest 5 --number 10 --sort rate --ipv4'
 

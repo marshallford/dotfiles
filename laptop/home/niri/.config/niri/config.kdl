@@ -199,7 +199,7 @@ include optional=true "dms/binds.kdl"
 include optional=true "dms/outputs.kdl"
 include optional=true "dms/cursor.kdl"
 include optional=true "dms/windowrules.kdl"
-include optional=true "dms/wpblur.kdl.kdl"
+include optional=true "dms/wpblur.kdl"
 
 binds {
     Mod+B hotkey-overlay-title="Open Browser" { spawn "chromium"; }

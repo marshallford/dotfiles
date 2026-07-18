@@ -170,6 +170,14 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
 
+## Keyboard (keyd)
+
+```shell
+yay -Sy keyd
+sudo nano /etc/keyd/default.conf # system/setup package
+sudo systemctl enable --now keyd
+```
+
 ## Shell/DE
 
 ```shell

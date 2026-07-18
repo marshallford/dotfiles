@@ -203,11 +203,13 @@ include optional=true "dms/wpblur.kdl"
 
 binds {
     Mod+B hotkey-overlay-title="Open Browser" { spawn "chromium"; }
-    // Re-homed from Mod+V, which the keyd cmd-layer now uses for paste.
-    Mod+P hotkey-overlay-title="Clipboard Manager" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
-    // Unreachable (keyd steals Cmd/Win+c/v); title=null hides them from the overlay.
+    // Re-homed off Super+X / Mod+V, which keyd now uses for cut / paste.
+    Mod+P hotkey-overlay-title="Power Menu: Toggle" { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
+    Mod+E hotkey-overlay-title="Clipboard Manager" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    // Unreachable (keyd steals Cmd/Win+c/v/x); title=null hides them from the overlay.
     Mod+C hotkey-overlay-title=null { center-column; }
     Mod+Ctrl+C hotkey-overlay-title=null { center-visible-columns; }
     Mod+Shift+V hotkey-overlay-title=null { switch-focus-between-floating-and-tiling; }
     Mod+V hotkey-overlay-title=null { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    Super+X hotkey-overlay-title=null { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
 }

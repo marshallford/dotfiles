@@ -36,5 +36,7 @@
     "make": true,
     "go": true
   },
-  "claudeCode.preferredLocation": "panel"
+  "claudeCode.preferredLocation": "panel",
+  "chat.disableAIFeatures": true,
+  "chat.agent.enabled": false
 }

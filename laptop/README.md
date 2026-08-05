@@ -93,6 +93,7 @@ reboot
 ## After reboot setup
 
 ```shell
+nano /etc/pacman.conf # system/setup package
 mkdir -p /etc/pacman.d/hooks
 nano /etc/pacman.d/hooks/99-limine.hook # system/setup package
 echo "--save /etc/pacman.d/mirrorlist --protocol https --age 2 --fastest 5 --number 10 --sort rate --ipv4" > /etc/xdg/reflector/reflector.conf

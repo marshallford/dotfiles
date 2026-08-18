@@ -1,0 +1,11 @@
+leftalt = layer(cmd)
+
+[cmd:C]
+left  = home
+right = end
+up    = C-home
+down  = C-end
+leftbrace  = A-left
+rightbrace = A-right
+leftshift+4 = sysrq
+leftshift+3 = C-sysrq

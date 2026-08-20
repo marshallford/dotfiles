@@ -96,17 +96,20 @@ reboot
 nano /etc/pacman.conf # system/setup package
 mkdir -p /etc/pacman.d/hooks
 nano /etc/pacman.d/hooks/99-limine.hook # system/setup package
-echo "--save /etc/pacman.d/mirrorlist --protocol https --age 2 --fastest 5 --number 10 --sort rate --ipv4" > /etc/xdg/reflector/reflector.conf
+nano /etc/xdg/reflector/reflector.conf # system/setup package
+mkdir -p /etc/systemd/system/reflector.service.d
+nano /etc/systemd/system/reflector.service.d/retry.conf # system/setup package
 systemctl enable reflector.timer
 systemctl start reflector
-pacman -Sy intel-media-driver mesa vulkan-intel
-pacman -Sy vim less wget btop htop zip unzip zsh fwupd udisks2 usbutils stow
+pacman -Sy intel-media-driver vpl-gpu-rt mesa vulkan-intel
+pacman -Sy vim less wget btop htop zip unzip zsh fwupd udisks2 usbutils stow kernel-modules-hook
 fwupdmgr get-devices
 fwupdmgr refresh
 fwupdmgr get-updates
 fwupdmgr update
 systemctl enable --now fwupd-refresh.timer
 systemctl enable --now fstrim.timer
+systemctl enable --now linux-modules-cleanup.service
 ```
 
 ## Create user
@@ -118,13 +121,18 @@ EDITOR=nano visudo # Uncomment "%wheel ALL=(ALL:ALL) ALL"
 reboot # to avoid PAM issues, at the very least logout and connect/login as marshall
 ```
 
+## Clone dotfiles
+
+```shell
+mkdir -p ~/Documents/Projects
+git clone https://github.com/marshallford/dotfiles.git ~/Documents/Projects/dotfiles # https for bootstrap, see Restore
+```
+
 ## Install yay
 
 ```shell
-cd ~
-mkdir -p .config/pacman
-nano .config/pacman/makepkg.conf # home/pacman package
-git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+stow -d ~/Documents/Projects/dotfiles/laptop/home -t ~ pacman
+cd ~ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 cd ~ && rm -rf yay
 ```
 
@@ -158,15 +166,25 @@ yay -Sy networkmanager
 sudo systemctl disable --now systemd-networkd
 sudo rm /etc/systemd/network/20-wired.network
 sudo systemctl enable --now NetworkManager
-sudo systemctl enable --now bluestooth
-systemctl --user enable --now ssh-agent.service
+sudo systemctl enable --now bluetooth
+systemctl --user enable --now ssh-agent.socket
+```
+
+## System tuning
+
+```shell
+yay -Sy zram-generator thermald
+cd ~/Documents/Projects/dotfiles/laptop/system/setup
+sudo cp -r etc/systemd/{zram-generator.conf.d,oomd.conf.d,system.conf.d,user} /etc/systemd/
+sudo cp -r etc/{sysctl.d,tmpfiles.d} /etc/
+sudo systemctl enable thermald systemd-oomd
 ```
 
 ## Devices
 
 ```shell
-sudo nano /etc/udev/rules.d/50-keychron.rules # system/setup package
-sudo nano /etc/udev/rules.d/50-nuphy.rules # system/setup package
+cd ~/Documents/Projects/dotfiles/laptop/system/setup
+sudo cp -r etc/{udev,modprobe.d} /etc/
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
@@ -175,7 +193,8 @@ sudo udevadm trigger
 
 ```shell
 yay -Sy keyd
-sudo nano /etc/keyd/{common,nuphy.conf,builtin.conf} # system/setup package
+cd ~/Documents/Projects/dotfiles/laptop/system/setup
+sudo cp -r etc/keyd /etc/
 sudo keyd check
 sudo systemctl enable --now keyd
 ```
@@ -194,7 +213,7 @@ voxtype setup check
 ## Shell/DE
 
 ```shell
-yay -Sy dms-shell-niri uwsm nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
+yay -Sy dms-shell-niri nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
 systemctl --user add-wants niri.service dms
 dms setup # may need to `rm -rf ~/.config/niri` first
 ```
@@ -203,11 +222,10 @@ dms setup # may need to `rm -rf ~/.config/niri` first
 
 ```shell
 yay -Sy greetd-dms-greeter-bin
-sudo nano /etc/greetd/config.toml # system/setup package
-sudo nano /etc/pam.d/greetd # system/setup package
-sudo nano /etc/pam.d/passwd # system/setup package
+cd ~/Documents/Projects/dotfiles/laptop/system/setup
+sudo cp -r etc/{greetd,pam.d} /etc/
 sudo systemctl enable --now greetd
-dms greeter sync
+dms greeter sync # adds ${USER} to the greeter group
 ```
 
 ## CLI Applications
@@ -217,6 +235,7 @@ yay -Sy ethtool wavemon nmap pacman-contrib rsync ripgrep jq yq zsh-antidote zsh
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}
+sudo systemctl enable --now paccache.timer
 # logout
 ```
 
@@ -234,13 +253,18 @@ yay -Sy vlc vlc-plugins-all chromium ghostty visual-studio-code-bin spotify-laun
 ## Dotfiles
 
 ```shell
-cd ~/Documents/dotfiles # root of dotfiles repository
+cd ~/Documents/Projects/dotfiles # root of dotfiles repository
 cd laptop # machine
-sudo stow -d system -t / podman restic-backup
-stow -d home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform voxtype vscode xdg-defaults zsh
+sudo stow -d system -t / docker podman restic-backup
+stow --no-folding -d home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform voxtype vscode xdg-defaults zsh
 ```
+
+## Restore
+
+1. Restic: see [system/restic-backup](./system/restic-backup/README.md) for repo init, credentials, and NAS key
+2. Restoring `/home/marshall` recovers `~/.ssh/{github,primary-lan}`
+3. Dotfiles remote: `git -C ~/Documents/Projects/dotfiles remote set-url origin git@github.com:marshallford/dotfiles.git`
 
 ## TODO
 
-1. Misc networking: mDNS, Avahi, CUPS
-2. UWSM configuration in DMS
+1. Network printing: `cups` (pulls avahi, cups-filters), hand mDNS from resolved to avahi via `nss-mdns` + `nsswitch.conf`

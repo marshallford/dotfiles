@@ -97,7 +97,7 @@ alias export-vscode-extensions="code --list-extensions > $DOTFILES/$DOTFILES_MAC
 alias import-vscode-extensions="cat $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt | xargs -L 1 code --install-extension"
 alias updater='yay'
 alias cleaner='yay -Rns $(pacman -Qtdq)'
-alias repo-updater='sudo reflector --save /etc/pacman.d/mirrorlist --protocol https --age 2 --fastest 5 --number 10 --sort rate --ipv4'
+alias repo-updater='sudo reflector @/etc/xdg/reflector/reflector.conf'
 
 # SSH Agent (enabled separately: `systemctl --user enable --now ssh-agent.socket`)
 if [[ -z ${SSH_CONNECTION-} ]] && [[ -n ${XDG_RUNTIME_DIR-} ]]; then

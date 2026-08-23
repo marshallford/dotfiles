@@ -1,25 +1,29 @@
+.PHONY: default
 default: lint
+
+.DELETE_ON_ERROR:
 
 DOCKER_FLAGS += --rm
 ifeq ($(shell tty > /dev/null && echo 1 || echo 0), 1)
 DOCKER_FLAGS += -i
 endif
 
-DOCKER := docker
+DOCKER ?= docker
+DOCKER_MOUNT_FLAGS := ro,z
 DOCKER_RUN := $(DOCKER) run $(DOCKER_FLAGS)
 DOCKER_PULL := $(DOCKER) pull -q
 
-EDITORCONFIG_CHECKER_VERSION ?= 3.6.1
+EDITORCONFIG_CHECKER_VERSION ?= 3.11.1
 EDITORCONFIG_CHECKER_IMAGE ?= docker.io/mstruebing/editorconfig-checker:v$(EDITORCONFIG_CHECKER_VERSION)
-EDITORCONFIG_CHECKER := $(DOCKER_RUN) -v=$(CURDIR):/check $(EDITORCONFIG_CHECKER_IMAGE)
+EDITORCONFIG_CHECKER := $(DOCKER_RUN) -v=$(CURDIR):/check:$(DOCKER_MOUNT_FLAGS) $(EDITORCONFIG_CHECKER_IMAGE)
 
 SHELLCHECK_VERSION ?= 0.11.0
 SHELLCHECK_IMAGE ?= docker.io/koalaman/shellcheck:v$(SHELLCHECK_VERSION)
-SHELLCHECK := $(DOCKER_RUN) -v=$(CURDIR):/mnt $(SHELLCHECK_IMAGE)
+SHELLCHECK := $(DOCKER_RUN) -v=$(CURDIR):/mnt:$(DOCKER_MOUNT_FLAGS) $(SHELLCHECK_IMAGE)
 
-YAMLLINT_VERSION ?= 0.35.9
+YAMLLINT_VERSION ?= 0.35.13
 YAMLLINT_IMAGE ?= docker.io/pipelinecomponents/yamllint:$(YAMLLINT_VERSION)
-YAMLLINT := $(DOCKER_RUN) -v=$(CURDIR):/code $(YAMLLINT_IMAGE) yamllint
+YAMLLINT := $(DOCKER_RUN) -v=$(CURDIR):/code:$(DOCKER_MOUNT_FLAGS) $(YAMLLINT_IMAGE) yamllint
 
 .PHONY: pull pull/editorconfig pull/shellcheck pull/yamllint
 pull: pull/editorconfig pull/shellcheck pull/yamllint

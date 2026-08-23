@@ -1,6 +1,6 @@
 # Laptop Installation Guide
 
-> Arch Linux, LUKS, BTRFS, Limine, Plymouth, Greetd, NetworkManager, Pipewire, Niri, DMS
+> Arch Linux, LUKS2 + Btrfs, Limine/Plymouth boot, greetd login, Niri/DMS Wayland desktop, PipeWire audio, NetworkManager, keyd macOS-style keys, Voxtype dictation, restic backups
 
 ## Within Arch Linux install media
 
@@ -255,7 +255,7 @@ yay -Sy vlc vlc-plugins-all chromium ghostty visual-studio-code-bin spotify-laun
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
 cd laptop # machine
-sudo stow -d system -t / docker podman restic-backup
+sudo stow --no-folding -d system -t / docker podman restic-backup
 stow --no-folding -d home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform voxtype vscode xdg-defaults zsh
 ```
 

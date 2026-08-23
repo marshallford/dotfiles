@@ -10,7 +10,7 @@ setopt HIST_IGNORE_DUPS       # do not save duplicate of prior command
 setopt HIST_IGNORE_SPACE      # do not save if line starts with space
 setopt HIST_NO_STORE          # do not save history commands
 setopt HIST_REDUCE_BLANKS     # strip superfluous blanks
-setopt INC_APPEND_HISTORY     # don’t wait for shell to exit to save history lines
+setopt INC_APPEND_HISTORY     # don't wait for shell to exit to save history lines
 
 # Appearance
 if [[ -z "${LS_COLORS-}" ]]; then

@@ -7,4 +7,4 @@ Target = limine
 [Action]
 Description = Deploying Limine after upgrade...
 When = PostTransaction
-Exec = /usr/bin/cp /usr/share/limine/BOOTX64.EFI /boot/EFI/limine/
+Exec = /bin/sh -c '/usr/bin/cp /usr/share/limine/BOOTX64.EFI /boot/EFI/limine/ && { ! [ -f /var/lib/sbctl/GUID ] || /usr/bin/sbctl sign -s /boot/EFI/limine/BOOTX64.EFI; }'

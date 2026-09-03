@@ -1,0 +1,1 @@
+quiet splash rd.luks.name=f36eaf3e-a379-4d95-b0b5-269cbd011de2=root root=/dev/mapper/root rw rootflags=subvol=@ rootfstype=btrfs

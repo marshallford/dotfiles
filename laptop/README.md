@@ -1,6 +1,29 @@
 # Laptop Installation Guide
 
-> Arch Linux, LUKS2 + Btrfs, Limine/Plymouth boot, greetd login, Niri/DMS Wayland desktop, PipeWire audio, NetworkManager, keyd macOS-style keys, Voxtype dictation, restic backups
+> Arch Linux, LUKS2 + Btrfs, Secure Boot with signed UKIs, Limine/Plymouth boot, greetd login, Niri/DMS Wayland desktop, PipeWire audio, NetworkManager, keyd macOS-style keys, Voxtype dictation, restic backups
+
+Two NVMe disks: a 1TB SK hynix for Linux and a 256GB WD with a pre-existing Windows install. Kernel device names are not stable, so everything below addresses disks through `/dev/disk/by-id` or `by-label`. Only the SK hynix is repartitioned. Windows has no ESP of its own, so both bootloaders share the SK hynix ESP and Windows must be re-registered on it after the wipe (see [Clean up](#clean-up)).
+
+## Within Windows
+
+PowerShell as Administrator:
+
+```powershell
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power' -Name HiberbootEnabled -PropertyType DWord -Value 0 -Force
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation' -Name RealTimeIsUniversal -PropertyType DWord -Value 1 -Force
+powercfg /h off
+```
+
+1. `HiberbootEnabled` disables Fast startup, which otherwise leaves NTFS hibernated on shutdown and unsafe to mount read-write
+2. `RealTimeIsUniversal` matches the UTC hardware clock set by `hwclock --systohc` in [Within Arch Linux install media](#within-arch-linux-install-media)
+3. `powercfg /h off` disables real hibernation, which dirties NTFS the same way
+
+## Within BIOS
+
+In the Dell BIOS (F2):
+
+1. Boot Configuration -> Secure Boot -> Enable Secure Boot: Off. The Arch ISO is unsigned and will not boot otherwise; [Secure Boot](#secure-boot) re-enables it
+2. Storage -> SATA/NVMe Operation: AHCI/NVMe, not RAID On. Intel RST otherwise hides the NVMe disks from the installer
 
 ## Within Arch Linux install media
 
@@ -9,21 +32,23 @@
 3. Follow steps below (based on https://gist.github.com/yovko/512326b904d120f3280c163abfbcb787)
 
 ```shell
-fdisk -l # ensure nvme0n1 is the correct disk
+lsblk -o NAME,SIZE,MODEL # device names are not stable, identify the disk by model
+DISK=/dev/disk/by-id/nvme-PC811_SED_SK_hynix_1024GB____AME9N00091080975E # 1TB SK hynix, not the WD
+ls -l "$DISK" # confirm it resolves to the 1TB disk
 
-sgdisk --zap-all /dev/nvme0n1
+sgdisk --zap-all "$DISK"
 
-parted --script /dev/nvme0n1 \
+parted --script "$DISK" \
 mklabel gpt \
 mkpart ESP fat32 1MiB 4097MiB \
 set 1 esp on \
 mkpart Linux btrfs 4097MiB 100%
 
-mkfs.fat -n ESP -F 32 /dev/nvme0n1p1
+mkfs.fat -n ESP -F 32 "$DISK-part1"
 
-cryptsetup luksFormat --label CRYPTROOT /dev/nvme0n1p2
+cryptsetup luksFormat --label CRYPTROOT "$DISK-part2"
 
-cryptsetup open /dev/nvme0n1p2 root
+cryptsetup open "$DISK-part2" root
 mkfs.btrfs -L ROOT /dev/mapper/root
 
 mount /dev/mapper/root /mnt
@@ -32,7 +57,6 @@ btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var_log
 btrfs subvolume create /mnt/@var_cache
-btrfs subvolume create /mnt/@snapshots
 
 umount /mnt
 
@@ -40,39 +64,46 @@ mount -o compress=zstd:1,noatime,subvol=@ /dev/mapper/root /mnt
 mount --mkdir -o compress=zstd:1,noatime,subvol=@home /dev/mapper/root /mnt/home
 mount --mkdir -o compress=zstd:1,noatime,subvol=@var_log /dev/mapper/root /mnt/var/log
 mount --mkdir -o compress=zstd:1,noatime,subvol=@var_cache /dev/mapper/root /mnt/var/cache
-mount --mkdir -o compress=zstd:1,noatime,subvol=@snapshots /dev/mapper/root /mnt/.snapshots
-mount --mkdir /dev/nvme0n1p1 /mnt/boot
+mount --mkdir "$DISK-part1" /mnt/boot
 
 pacman -Syy
-pacstrap -K /mnt base base-devel linux linux-lts linux-firmware sof-firmware intel-ucode wireless-regdb btrfs-progs ntfs-3g exfatprogs efibootmgr limine cryptsetup util-linux plymouth openssh git nano reflector
+pacstrap -K /mnt base base-devel linux linux-lts linux-firmware sof-firmware intel-ucode wireless-regdb btrfs-progs ntfs-3g exfatprogs efibootmgr limine cryptsetup util-linux plymouth systemd-ukify sbctl openssh git nano reflector
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt
 
+DISK=/dev/disk/by-id/nvme-PC811_SED_SK_hynix_1024GB____AME9N00091080975E # chroot drops the outer shell
+
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
 hwclock --systohc
 
-nano /etc/locale.gen # Uncomment the UTF-8 locales you will be using, example: 'en_US.UTF-8 UTF-8'
+nano /etc/locale.gen # uncomment the UTF-8 locale 'en_US.UTF-8 UTF-8'
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
-nano /etc/conf.d/wireless-regdom # Uncomment the appropriate domain, example: 'WIRELESS_REGDOM="US"'
+nano /etc/conf.d/wireless-regdom # uncomment the domain 'WIRELESS_REGDOM="US"'
 
 echo dell > /etc/hostname
 
 passwd
 
+cryptsetup luksUUID /dev/disk/by-label/CRYPTROOT # copy uuid
+
 nano /etc/mkinitcpio.conf # system/setup package
+nano /etc/kernel/cmdline # system/setup package, paste uuid into rd.luks.name
+nano /etc/mkinitcpio.d/linux.preset # system/setup package
+nano /etc/mkinitcpio.d/linux-lts.preset # system/setup package
+mkdir -p /boot/EFI/Linux
 mkinitcpio -P
 
 mkdir -p /boot/EFI/limine
 cp /usr/share/limine/BOOTX64.EFI /boot/EFI/limine/
-
-efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch Linux Limine Bootloader" --loader '\EFI\limine\BOOTX64.EFI' --unicode
-
-cryptsetup luksUUID /dev/nvme0n1p2 # copy uuid
 nano /boot/EFI/limine/limine.conf # system/setup package
+
+efibootmgr --create --disk "$(readlink -f "$DISK")" --part 1 --label "Arch Linux Limine Bootloader" --loader '\EFI\limine\BOOTX64.EFI' --unicode
+
+ls /boot/EFI/Linux # must list both UKIs before leaving the chroot
 
 exit
 umount -R /mnt
@@ -112,12 +143,45 @@ systemctl enable --now fstrim.timer
 systemctl enable --now linux-modules-cleanup.service
 ```
 
+## Secure Boot
+
+Custom keys via `sbctl`, signing Limine and the UKIs so the firmware verifies each one. Signing happens before the firmware is touched, so Secure Boot is never enforced against an unsigned binary.
+
+```shell
+sbctl --disable-landlock export-enrolled-keys --dir /root/efi-keys-backup --format esl # PK deletion is irreversible, copy off machine
+sbctl create-keys
+sbctl sign -s /boot/EFI/limine/BOOTX64.EFI
+sbctl sign -s /boot/EFI/Linux/arch-linux.efi
+sbctl sign -s /boot/EFI/Linux/arch-linux-lts.efi
+sbctl sign -s /usr/lib/fwupd/efi/fwupdx64.efi
+sbctl verify # expect EFI/Microsoft, EFI/Boot and vmlinuz-* unsigned, leave them
+```
+
+In the Dell BIOS (F2):
+
+1. Boot Configuration -> Secure Boot -> Enable Secure Boot: On, undoing [Within BIOS](#within-bios)
+2. Boot Configuration -> Secure Boot -> Enable Microsoft UEFI CA: Enabled. Option ROMs need it and `--firmware-builtin` reads it out of `dbDefault`
+3. Boot Configuration -> Expert Key Management -> Enable Custom Mode: On. This alone clears the PK and moves Secure Boot Mode from Deployed to Audit
+4. Save and boot back into Arch. If `sbctl status` does not report Setup Mode enabled, return and delete the PK under Custom Mode Key Management
+
+```shell
+sbctl status # Setup Mode: Enabled
+sbctl enroll-keys --microsoft --firmware-builtin db,KEK # if it reports immutable efivars, chattr -i the files it names and retry
+reboot # confirm with sbctl status
+```
+
+If the firmware refuses to boot afterwards, turn Secure Boot back off in the BIOS and re-check `sbctl verify`.
+
+Boot the Limine Windows entry once. It confirms the Microsoft certificates survived enrollment, which is the main risk of replacing the platform key on a shared ESP.
+
+Nothing needs signing by hand afterwards: mkinitcpio's `sbctl` post hook signs each UKI as it is built, `zz-sbctl.hook` re-signs the database on package upgrades, and `99-limine.hook` signs `BOOTX64.EFI` when Limine is redeployed.
+
 ## Create user
 
 ```shell
 useradd -s /bin/zsh -mG wheel input marshall
 passwd marshall
-EDITOR=nano visudo # Uncomment "%wheel ALL=(ALL:ALL) ALL"
+EDITOR=nano visudo # uncomment "%wheel ALL=(ALL:ALL) ALL"
 reboot # to avoid PAM issues, at the very least logout and connect/login as marshall
 ```
 
@@ -146,7 +210,7 @@ Windows fonts
 
 ```shell
 yay -Sy ttf-ms-win11 # should fail
-sudo mount /dev/nvme1n1p2 /mnt
+sudo mount -o ro /dev/disk/by-id/nvme-WD_PC_SN740_SDDQNQD-256G-1001_2330P1400623-part2 /mnt # Windows disk
 cp /mnt/Windows/{Fonts/*.{ttf,ttc},System32/Licenses/neutral/*/*/license.rtf} ~/.cache/yay/ttf-ms-win11/
 yay -S ttf-ms-win11
 sudo umount /mnt
@@ -248,7 +312,7 @@ yay -Sy vlc vlc-plugins-all chromium ghostty visual-studio-code-bin spotify-laun
 ## Clean up
 
 1. SSH: `PermitRootLogin prohibit-password` and `systemctl disable --now sshd`
-2. Restore Windows UEFI entry: Boot into Windows install media, command prompt, `diskpart`, `select disk 0`, `select partition 1`, `assign letter=S`, `exit`, `bcdboot C:\Windows /s S: /f UEFI`
+2. Restore Windows UEFI entry, wiped along with the ESP: boot into Windows install media (Microsoft-signed, so Secure Boot can stay on), command prompt, `diskpart`, `select disk 0`, `select partition 1`, `assign letter=S`, `exit`, `bcdboot C:\Windows /s S: /f UEFI`. This writes `EFI/Microsoft` and `EFI/Boot/bootx64.efi`, which Limine's `/Windows` entry chainloads
 
 ## Dotfiles
 
@@ -264,6 +328,41 @@ stow --no-folding -d home -t ~ chromium desktop-applications dms ghostty git nir
 1. Restic: see [system/restic-backup](./system/restic-backup/README.md) for repo init, credentials, and NAS key
 2. Restoring `/home/marshall` recovers `~/.ssh/{github,primary-lan}`
 3. Dotfiles remote: `git -C ~/Documents/Projects/dotfiles remote set-url origin git@github.com:marshallford/dotfiles.git`
+
+## Recover the ESP
+
+Windows shares the ESP, so its updates can reset the UEFI boot order or overwrite the ESP itself. Fix the order from Arch:
+
+```shell
+efibootmgr # find the Limine entry number
+sudo efibootmgr -o 0002,0001,0000 # example numbers, Limine first
+```
+
+If the ESP itself was wiped, boot the Arch install media with Secure Boot off:
+
+```shell
+cryptsetup open /dev/disk/by-label/CRYPTROOT root
+mount -o compress=zstd:1,noatime,subvol=@ /dev/mapper/root /mnt
+mount --mkdir /dev/disk/by-label/ESP /mnt/boot
+arch-chroot /mnt
+
+DISK=/dev/disk/by-id/nvme-PC811_SED_SK_hynix_1024GB____AME9N00091080975E
+
+mkdir -p /boot/EFI/Linux /boot/EFI/limine
+cp /usr/share/limine/BOOTX64.EFI /boot/EFI/limine/
+nano /boot/EFI/limine/limine.conf # system/setup package
+mkinitcpio -P # rebuilds and signs the UKIs
+sbctl sign-all # the sbctl database survives on @, so this re-signs BOOTX64.EFI and fwupd
+sbctl verify
+
+efibootmgr # NVRAM entries usually survive an ESP wipe, only re-create if missing
+efibootmgr --create --disk "$(readlink -f "$DISK")" --part 1 --label "Arch Linux Limine Bootloader" --loader '\EFI\limine\BOOTX64.EFI' --unicode
+
+exit
+umount -R /mnt
+cryptsetup close root
+reboot # re-enable Secure Boot, then Clean up step 2 if EFI/Microsoft was lost too
+```
 
 ## TODO
 

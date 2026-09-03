@@ -13,6 +13,9 @@ model = "large-v3-turbo"
 language = "en"
 translate = false
 
+[osd]
+frontend = "quickshell"
+
 [output]
 mode = "type"
 fallback_to_clipboard = true

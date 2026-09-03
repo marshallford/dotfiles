@@ -1,6 +1,7 @@
 anthropic.claude-code
 editorconfig.editorconfig
 golang.go
+grafana.vscode-jsonnet
 hashicorp.terraform
 matthewpi.caddyfile-support
 pomdtr.excalidraw-editor

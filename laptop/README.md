@@ -295,7 +295,7 @@ dms greeter sync # adds ${USER} to the greeter group
 ## CLI Applications
 
 ```shell
-yay -Sy ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-compose podman kind istio cilium-cli ollama
+yay -Sy ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}

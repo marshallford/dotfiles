@@ -3,5 +3,16 @@
   "log-opts": {
     "max-size": "10m",
     "max-file": "5"
+  },
+  "builder": {
+    "gc": {
+      "enabled": true,
+      "policy": [
+        {
+          "reservedSpace": "10GB",
+          "maxUsedSpace": "50GB"
+        }
+      ]
+    }
   }
 }

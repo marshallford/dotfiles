@@ -1,14 +1,17 @@
 [Default Applications]
-# Web browser (chromium)
+# Web browser (Chromium)
+application/xhtml+xml=chromium.desktop
+text/html=chromium.desktop
+x-scheme-handler/about=chromium.desktop
 x-scheme-handler/http=chromium.desktop
 x-scheme-handler/https=chromium.desktop
-x-scheme-handler/about=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
-text/html=chromium.desktop
-application/xhtml+xml=chromium.desktop
 
-# Mail (chromium)
+# Mail (Chromium)
 x-scheme-handler/mailto=chromium.desktop
+
+# PDF reader (Chromium)
+application/pdf=chromium.desktop
 
 # File manager (GNOME Files / Nautilus)
 inode/directory=org.gnome.Nautilus.desktop
@@ -16,39 +19,39 @@ inode/directory=org.gnome.Nautilus.desktop
 # Text editor (VS Code)
 text/plain=code.desktop
 
-# PDF reader (chromium)
-application/pdf=chromium.desktop
-
 # Image viewer (GNOME Loupe)
+image/bmp=org.gnome.Loupe.desktop
+image/gif=org.gnome.Loupe.desktop
 image/jpeg=org.gnome.Loupe.desktop
 image/png=org.gnome.Loupe.desktop
-image/gif=org.gnome.Loupe.desktop
-image/webp=org.gnome.Loupe.desktop
-image/bmp=org.gnome.Loupe.desktop
-image/tiff=org.gnome.Loupe.desktop
 image/svg+xml=org.gnome.Loupe.desktop
+image/tiff=org.gnome.Loupe.desktop
+image/webp=org.gnome.Loupe.desktop
 
 # Video (VLC)
 video/mp4=vlc.desktop
-video/x-matroska=vlc.desktop
-video/webm=vlc.desktop
-video/quicktime=vlc.desktop
-video/x-msvideo=vlc.desktop
 video/mpeg=vlc.desktop
+video/quicktime=vlc.desktop
+video/webm=vlc.desktop
+video/x-matroska=vlc.desktop
+video/x-msvideo=vlc.desktop
 
 # Music (VLC)
-audio/mpeg=vlc.desktop
+audio/aac=vlc.desktop
 audio/flac=vlc.desktop
-audio/x-wav=vlc.desktop
+audio/mpeg=vlc.desktop
 audio/ogg=vlc.desktop
 audio/x-vorbis+ogg=vlc.desktop
-audio/aac=vlc.desktop
+audio/x-wav=vlc.desktop
 
-# Chat (slack)
+# Chat (Slack)
 x-scheme-handler/slack=slack.desktop
+
+# API client (Bruno)
+x-scheme-handler/bruno=bruno.desktop
 
 [Added Associations]
 text/plain=code.desktop;
-image/jpeg=org.gnome.Loupe.desktop;
-image/png=org.gnome.Loupe.desktop;
+x-scheme-handler/about=chromium.desktop;
 x-scheme-handler/mailto=chromium.desktop;
+x-scheme-handler/unknown=chromium.desktop;

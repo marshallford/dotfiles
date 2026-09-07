@@ -13,24 +13,16 @@ gestures {
     }
 }
 
+// Input device configuration.
+// Find the full list of options on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 input {
-    touchpad {
-        tap
-        dwt
-        dwtp
-        natural-scroll
-    }
-    mouse {
-        accel-profile "flat"
-        accel-speed -0.5
-    }
-    warp-mouse-to-focus
+    warp-mouse-to-focus // not available in dms settings
 }
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
-
 layout {
     background-color "transparent"
     center-focused-column "never"
@@ -40,7 +32,6 @@ layout {
         proportion 0.66667
     }
     default-column-width { proportion 0.5; }
-
     border {
         off
         width 4
@@ -67,14 +58,6 @@ overview {
     workspace-shadow {
         off
     }
-}
-
-environment {
-    XDG_CURRENT_DESKTOP "niri"
-    QT_QPA_PLATFORM "wayland"
-    ELECTRON_OZONE_PLATFORM_HINT "auto"
-    QT_QPA_PLATFORMTHEME "gtk3"
-    QT_QPA_PLATFORMTHEME_QT6 "gtk3"
 }
 
 hotkey-overlay {
@@ -118,6 +101,11 @@ animations {
     }
 }
 
+// Window rules let you adjust behavior for individual windows.
+// Find more information on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
+// Work around WezTerm's initial configure bug
+// by setting an empty default-column-width.
 window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
@@ -125,14 +113,12 @@ window-rule {
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     default-column-width {}
 }
-
 window-rule {
     match app-id=r#"^org\.gnome\."#
     draw-border-with-background false
     geometry-corner-radius 12
     clip-to-geometry true
 }
-
 window-rule {
     match app-id=r#"^gnome-control-center$"#
     match app-id=r#"^pavucontrol$"#
@@ -140,7 +126,6 @@ window-rule {
     default-column-width { proportion 0.5; }
     open-floating false
 }
-
 window-rule {
     match app-id=r#"^org\.gnome\.Calculator$"#
     match app-id=r#"^gnome-calculator$"#
@@ -151,13 +136,11 @@ window-rule {
     match app-id=r#"chrome-nngceckbapebfimnlniiiahkandclblb"# // bitwarden
     open-floating true
 }
-
 window-rule {
     match app-id=r#"^steam$"# title=r#"^notificationtoasts_\d+_desktop$"#
     default-floating-position x=10 y=10 relative-to="bottom-right"
     open-focused false
 }
-
 window-rule {
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     match app-id="Alacritty"
@@ -166,7 +149,6 @@ window-rule {
     match app-id="kitty"
     draw-border-with-background false
 }
-
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id="zoom"
@@ -198,6 +180,7 @@ include optional=true "dms/alttab.kdl"
 include optional=true "dms/binds.kdl"
 include optional=true "dms/outputs.kdl"
 include optional=true "dms/cursor.kdl"
+include optional=true "dms/input.kdl"
 include optional=true "dms/windowrules.kdl"
 include optional=true "dms/wpblur.kdl"
 

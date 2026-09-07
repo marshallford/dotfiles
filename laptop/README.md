@@ -279,7 +279,7 @@ voxtype setup check
 ```shell
 yay -Sy dms-shell-niri nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
 systemctl --user add-wants niri.service dms
-dms setup # may need to `rm -rf ~/.config/niri` first
+DMS_PRIVESC=sudo dms setup # may need to `rm -rf ~/.config/niri` first
 ```
 
 ## Display/Login Manager
@@ -289,7 +289,7 @@ yay -Sy greetd-dms-greeter-bin
 cd ~/Documents/Projects/dotfiles/laptop/system/setup
 sudo cp -r etc/{greetd,pam.d} /etc/
 sudo systemctl enable --now greetd
-dms greeter sync # adds ${USER} to the greeter group
+DMS_PRIVESC=sudo dms-greeter sync # adds ${USER} to the greeter group
 ```
 
 ## CLI Applications

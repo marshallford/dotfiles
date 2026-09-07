@@ -290,6 +290,7 @@ cd ~/Documents/Projects/dotfiles/laptop/system/setup
 sudo cp -r etc/{greetd,pam.d} /etc/
 sudo systemctl enable --now greetd
 DMS_PRIVESC=sudo dms-greeter sync # adds ${USER} to the greeter group
+DMS_PRIVESC=sudo dms auth sync # generates /etc/pam.d/dankshell for the lock screen
 ```
 
 ## CLI Applications

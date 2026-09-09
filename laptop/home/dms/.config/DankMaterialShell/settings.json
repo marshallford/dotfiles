@@ -37,7 +37,6 @@
   "soundVolumeChanged": false,
   "acMonitorTimeout": 900,
   "acLockTimeout": 900,
-  "acSuspendTimeout": 7200,
   "batteryMonitorTimeout": 900,
   "batteryLockTimeout": 900,
   "batterySuspendTimeout": 3600,

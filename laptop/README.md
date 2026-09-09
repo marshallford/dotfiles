@@ -277,7 +277,7 @@ voxtype setup check
 ## Shell/DE
 
 ```shell
-yay -Sy dms-shell-niri nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
+yay -Sy dms-shell-niri dgop nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
 systemctl --user add-wants niri.service dms
 DMS_PRIVESC=sudo dms setup # may need to `rm -rf ~/.config/niri` first
 ```
@@ -296,7 +296,7 @@ DMS_PRIVESC=sudo dms auth sync # generates /etc/pam.d/dankshell for the lock scr
 ## CLI Applications
 
 ```shell
-yay -Sy ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
+yay -Sy ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq jpegoptim zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}

@@ -1,6 +1,5 @@
 [user]
   name = Marshall Ford
-  email = inbox@marshallford.me
 
 [core]
   editor = nano
@@ -49,3 +48,6 @@
 
 [includeIf "hasconfig:remote.*.url:https://github.com/*/**"]
   path = ~/.gitconfig-github
+
+[include]
+  path = ~/.config/git/identity

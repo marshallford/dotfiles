@@ -68,8 +68,9 @@ setopt interactivecomments # allow comments in interactive shell
 
 # Antidote Setup
 zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
+[[ -f ${zsh_plugins}.txt ]] || touch ${zsh_plugins}.txt
 
-fpath=(/usr/share/zsh-antidote/functions $fpath)
+[[ -n ${ANTIDOTE_FUNCTIONS-} ]] && fpath=($ANTIDOTE_FUNCTIONS $fpath)
 autoload -Uz antidote
 
 if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
@@ -88,16 +89,11 @@ alias diff='diff --color=auto'
 alias ls='ls --color=auto'
 alias lso="ls -alG | awk '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\" %0o \",k);print}'"
 alias grep='grep --color=auto'
-alias pbcopy='wl-copy'
-alias pbpaste='wl-paste'
 alias g='git'
 alias k='kubectl'
 alias h='history 0 | grep -i'
 alias export-vscode-extensions="code --list-extensions > $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt"
 alias import-vscode-extensions="cat $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt | xargs -L 1 code --install-extension"
-alias updater='yay'
-alias cleaner='yay -Rns $(pacman -Qtdq)'
-alias repo-updater='sudo reflector @/etc/xdg/reflector/reflector.conf'
 
 # SSH Agent (enabled separately: `systemctl --user enable --now ssh-agent.socket`)
 if [[ -z ${SSH_CONNECTION-} ]] && [[ -n ${XDG_RUNTIME_DIR-} ]]; then
@@ -108,5 +104,4 @@ if [[ -z ${SSH_CONNECTION-} ]] && [[ -n ${XDG_RUNTIME_DIR-} ]]; then
   unset ssh_agent_sock
 fi
 
-# CLI Setup
-[[ -s /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh
+[[ -r ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local

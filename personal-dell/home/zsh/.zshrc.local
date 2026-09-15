@@ -1,0 +1,9 @@
+# Aliases
+alias pbcopy='wl-copy'
+alias pbpaste='wl-paste'
+alias updater='yay'
+alias cleaner='yay -Rns $(pacman -Qtdq)'
+alias repo-updater='sudo reflector @/etc/xdg/reflector/reflector.conf'
+
+# CLI Setup
+[[ -s /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh

@@ -1,0 +1,3 @@
+[user]
+  email = inbox@marshallford.me
+  signingkey = ~/.ssh/github-signing

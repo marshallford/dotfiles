@@ -296,7 +296,7 @@ DMS_PRIVESC=sudo dms auth sync # generates /etc/pam.d/dankshell for the lock scr
 ## CLI Applications
 
 ```shell
-yay -Sy ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq jpegoptim zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd sops cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
+yay -Sy ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq jpegoptim zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd age sops cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}
@@ -319,9 +319,9 @@ yay -Sy vlc vlc-plugins-all chromium ghostty visual-studio-code-bin bruno-bin sp
 
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
-cd personal-dell # machine
-sudo stow --no-folding -d system -t / docker podman restic-backup
-stow --no-folding -d home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform voxtype vscode xdg-defaults zsh
+stow --no-folding -d shared/home -t ~ ghostty git ssh zsh
+sudo stow --no-folding -d personal-dell/system -t / docker podman restic-backup
+stow --no-folding -d personal-dell/home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform voxtype vscode xdg-defaults zsh
 ```
 
 ## Restore

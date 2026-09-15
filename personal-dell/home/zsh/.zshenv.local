@@ -1,0 +1,2 @@
+export DOTFILES_MACHINE='personal-dell'
+export ANTIDOTE_FUNCTIONS='/usr/share/zsh-antidote/functions'

@@ -12,6 +12,3 @@
 
 [tag]
   gpgSign = true
-
-[user]
-  signingkey = ~/.ssh/github-signing

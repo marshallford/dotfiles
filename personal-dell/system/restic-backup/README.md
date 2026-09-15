@@ -24,7 +24,15 @@ The script expects these variables to be set (depending on target):
 
 ### NAS SSH client config (root)
 
-This package installs `/root/.ssh/config` with a `Host restic-nas` entry.
+`/root/.ssh/config` carries the `Host restic-nas` entry. It lives in the `system/setup` package and is copied, not stowed - ssh rejects a config file it does not own, so a symlink into `/home` fails with `Bad owner or permissions`.
+
+```shell
+cd ~/Documents/Projects/dotfiles/personal-dell/system/setup
+sudo mkdir -p /root/.ssh
+sudo cp -r root/.ssh/. /root/.ssh/
+sudo chown -R root:root /root/.ssh
+sudo sh -c 'chmod 700 /root/.ssh; chmod 600 /root/.ssh/config /root/.ssh/config.d/*' # glob must expand as root
+```
 
 - Put the private key at `/root/.ssh/restic-nas`
 - Ensure permissions are locked down (e.g. `chmod 600 /root/.ssh/restic-nas`)

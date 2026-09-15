@@ -38,5 +38,6 @@
   },
   "claudeCode.preferredLocation": "panel",
   "chat.disableAIFeatures": true,
-  "chat.agent.enabled": false
+  "chat.agent.enabled": false,
+  "claudeCode.hideOnboarding": true
 }

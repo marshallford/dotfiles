@@ -5,7 +5,7 @@ export PAGER=${PAGER:-less}
 export LESS=${LESS:--R}
 export LESSHISTFILE='-'
 export DOTFILES="$HOME/Documents/Projects/dotfiles"
-export DOTFILES_MACHINE='laptop'
+export DOTFILES_MACHINE='personal-dell'
 export GOPATH="$HOME/.go"
 export TFENV_CONFIG_DIR="$HOME/.tfenv"
 

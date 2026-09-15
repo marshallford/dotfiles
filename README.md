@@ -2,7 +2,7 @@
 
 Per-machine configuration, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-* [Laptop](./laptop) - Arch Linux, Niri/DMS Wayland desktop
+* [Personal Dell](./personal-dell) - Arch Linux, Niri/DMS Wayland desktop
 
 ## Layout
 

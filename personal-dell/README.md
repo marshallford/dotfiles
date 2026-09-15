@@ -1,4 +1,4 @@
-# Laptop Installation Guide
+# Personal Dell Installation Guide
 
 > Arch Linux, LUKS2 + Btrfs, Secure Boot with signed UKIs, Limine/Plymouth boot, greetd login, Niri/DMS Wayland desktop, PipeWire audio, NetworkManager, keyd macOS-style keys, Voxtype dictation, restic backups
 
@@ -195,7 +195,7 @@ git clone https://github.com/marshallford/dotfiles.git ~/Documents/Projects/dotf
 ## Install yay
 
 ```shell
-stow -d ~/Documents/Projects/dotfiles/laptop/home -t ~ pacman
+stow -d ~/Documents/Projects/dotfiles/personal-dell/home -t ~ pacman
 cd ~ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 cd ~ && rm -rf yay
 ```
@@ -238,7 +238,7 @@ systemctl --user enable --now ssh-agent.socket
 
 ```shell
 yay -Sy zram-generator thermald
-cd ~/Documents/Projects/dotfiles/laptop/system/setup
+cd ~/Documents/Projects/dotfiles/personal-dell/system/setup
 sudo cp -r etc/systemd/{zram-generator.conf.d,oomd.conf.d,system.conf.d,user} /etc/systemd/
 sudo cp -r etc/{sysctl.d,tmpfiles.d} /etc/
 sudo systemctl enable thermald systemd-oomd
@@ -247,7 +247,7 @@ sudo systemctl enable thermald systemd-oomd
 ## Devices
 
 ```shell
-cd ~/Documents/Projects/dotfiles/laptop/system/setup
+cd ~/Documents/Projects/dotfiles/personal-dell/system/setup
 sudo cp -r etc/{udev,modprobe.d} /etc/
 sudo udevadm control --reload-rules
 sudo udevadm trigger
@@ -257,7 +257,7 @@ sudo udevadm trigger
 
 ```shell
 yay -Sy keyd
-cd ~/Documents/Projects/dotfiles/laptop/system/setup
+cd ~/Documents/Projects/dotfiles/personal-dell/system/setup
 sudo cp -r etc/keyd /etc/
 sudo keyd check
 sudo systemctl enable --now keyd
@@ -286,7 +286,7 @@ DMS_PRIVESC=sudo dms setup # may need to `rm -rf ~/.config/niri` first
 
 ```shell
 yay -Sy greetd-dms-greeter-bin
-cd ~/Documents/Projects/dotfiles/laptop/system/setup
+cd ~/Documents/Projects/dotfiles/personal-dell/system/setup
 sudo cp -r etc/{greetd,pam.d} /etc/
 sudo systemctl enable --now greetd
 DMS_PRIVESC=sudo dms-greeter sync # adds ${USER} to the greeter group
@@ -319,7 +319,7 @@ yay -Sy vlc vlc-plugins-all chromium ghostty visual-studio-code-bin bruno-bin sp
 
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
-cd laptop # machine
+cd personal-dell # machine
 sudo stow --no-folding -d system -t / docker podman restic-backup
 stow --no-folding -d home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform voxtype vscode xdg-defaults zsh
 ```

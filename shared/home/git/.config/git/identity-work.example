@@ -1,0 +1,6 @@
+[user]
+  email = USER@CLIENT.example
+  signingkey = ~/.ssh/CLIENT-signing
+
+[core]
+  sshCommand = ssh -i ~/.ssh/CLIENT -o IdentitiesOnly=yes

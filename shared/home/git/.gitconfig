@@ -52,3 +52,6 @@
 
 [includeIf "gitdir:~/Documents/Projects/"]
   path = ~/.config/git/identity
+
+[includeIf "gitdir:~/Documents/Work/"]
+  path = ~/.config/git/identity-work

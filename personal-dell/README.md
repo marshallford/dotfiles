@@ -319,9 +319,9 @@ yay -Sy vlc vlc-plugins-all chromium ghostty visual-studio-code-bin bruno-bin sp
 
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
-stow --no-folding -d shared/home -t ~ ghostty git ssh zsh
+stow --no-folding -d shared/home -t ~ ghostty git git-personal ssh ssh-personal zsh
 sudo stow --no-folding -d personal-dell/system -t / docker podman restic-backup
-stow --no-folding -d personal-dell/home -t ~ chromium desktop-applications dms ghostty git niri pacman ssh terraform voxtype vscode xdg-defaults zsh
+stow --no-folding -d personal-dell/home -t ~ chromium desktop-applications dms ghostty niri pacman ssh terraform voxtype vscode xdg-defaults zsh
 ```
 
 ## Restore

@@ -1,5 +1,6 @@
 [user]
   name = Marshall Ford
+  useConfigOnly = true
 
 [core]
   editor = nano
@@ -49,5 +50,5 @@
 [includeIf "hasconfig:remote.*.url:https://github.com/*/**"]
   path = ~/.gitconfig-github
 
-[include]
+[includeIf "gitdir:~/Documents/Projects/"]
   path = ~/.config/git/identity

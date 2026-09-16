@@ -3,6 +3,7 @@
 Per-machine configuration, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 * [Personal Dell](./personal-dell) - Arch Linux, Niri/DMS Wayland desktop
+* [Work MacBook](./work-macbook) - macOS, Apple Silicon
 
 ## Layout
 

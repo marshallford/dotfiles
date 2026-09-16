@@ -8,9 +8,10 @@ export DOTFILES="$HOME/Documents/Projects/dotfiles"
 export GOPATH="$HOME/.go"
 export TFENV_CONFIG_DIR="$HOME/.tfenv"
 
-# PATH
-typeset -U path PATH
-[[ -d $HOME/.local/bin ]] && path=($HOME/.local/bin $path)
-[[ -d $GOPATH/bin ]] && path=($GOPATH/bin $path)
+typeset -U path PATH fpath FPATH
 
 [[ -r ${ZDOTDIR:-$HOME}/.zshenv.local ]] && source ${ZDOTDIR:-$HOME}/.zshenv.local
+
+# PATH
+[[ -d $HOME/.local/bin ]] && path=($HOME/.local/bin $path)
+[[ -d $GOPATH/bin ]] && path=($GOPATH/bin $path)

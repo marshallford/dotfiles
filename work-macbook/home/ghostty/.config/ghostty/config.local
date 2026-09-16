@@ -1,0 +1,7 @@
+# Font Configuration
+font-size = 14
+font-thicken = true
+
+# Window Configuration
+macos-titlebar-style = tabs
+macos-option-as-alt = true

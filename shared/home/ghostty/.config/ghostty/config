@@ -4,7 +4,6 @@ font-family = ""
 font-family = "JetBrainsMono Nerd Font"
 
 # Window Configuration
-window-decoration = false
 window-padding-x = 12
 window-padding-y = 12
 background-opacity = 1.0
@@ -30,5 +29,8 @@ unfocused-split-fill = #44464f
 # Shell integration
 shell-integration = detect
 shell-integration-features = cursor,sudo,title,no-cursor
+
+# Key bindings
+keybind = shift+enter=text:\n
 
 config-file = ?config.local

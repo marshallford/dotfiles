@@ -92,8 +92,8 @@ alias grep='grep --color=auto'
 alias g='git'
 alias k='kubectl'
 alias h='history 0 | grep -i'
-alias export-vscode-extensions="code --list-extensions > $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt"
-alias import-vscode-extensions="cat $DOTFILES/$DOTFILES_MACHINE/vscode-extensions.txt | xargs -L 1 code --install-extension"
+alias export-vscode-extensions="code --list-extensions | sort > $DOTFILES/shared/vscode-extensions.txt"
+alias import-vscode-extensions="xargs -L 1 code --install-extension < $DOTFILES/shared/vscode-extensions.txt"
 
 # SSH Agent (enabled separately: `systemctl --user enable --now ssh-agent.socket`)
 if [[ -z ${SSH_CONNECTION-} ]] && [[ -n ${XDG_RUNTIME_DIR-} ]]; then

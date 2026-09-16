@@ -327,7 +327,7 @@ stow --no-folding -d personal-dell/home -t ~ chromium desktop-applications dms g
 ## Restore
 
 1. Restic: see [system/restic-backup](./system/restic-backup/README.md) for repo init, credentials, and NAS key
-2. Restoring `/home/marshall` recovers `~/.ssh/{github,primary-lan}`
+2. Restoring `/home/marshall` recovers `~/.ssh/{github,github-signing,primary-lan}`
 3. Dotfiles remote: `git -C ~/Documents/Projects/dotfiles remote set-url origin git@github.com:marshallford/dotfiles.git`
 
 ## Recover the ESP

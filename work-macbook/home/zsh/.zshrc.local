@@ -1,0 +1,6 @@
+# Aliases
+alias updater='brew update && brew upgrade'
+alias cleaner='brew autoremove && brew cleanup'
+
+# CLI Setup
+[[ -s $HOMEBREW_PREFIX/opt/nvm/nvm.sh ]] && source "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"

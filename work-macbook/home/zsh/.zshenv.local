@@ -1,0 +1,6 @@
+export DOTFILES_MACHINE='work-macbook'
+
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export ANTIDOTE_FUNCTIONS="$HOMEBREW_PREFIX/share/antidote/functions"

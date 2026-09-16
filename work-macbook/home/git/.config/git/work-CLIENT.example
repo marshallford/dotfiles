@@ -1,0 +1,6 @@
+[user]
+  email = USER@CLIENT.example
+  signingkey = ~/.ssh/work-CLIENT-signing
+
+[core]
+  sshCommand = ssh -P work -i ~/.ssh/work-CLIENT

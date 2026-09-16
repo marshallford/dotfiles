@@ -30,7 +30,7 @@ brew bundle check --file=work-macbook/Brewfile # should report everything satisf
 ## macOS preferences
 
 ```shell
-~/Documents/Projects/dotfiles/work-macbook/system/defaults.sh
+~/Documents/Projects/dotfiles/work-macbook/defaults.sh
 ```
 
 Log out and back in afterwards. This machine is MDM enrolled, and `/Library/Managed Preferences` silently outranks anything written here; `ls /Library/Managed\ Preferences/*.plist` shows what MDM controls.
@@ -82,7 +82,7 @@ rm -f ~/.vscode/argv.json ~/Library/Application\ Support/Code/User/settings.json
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
 stow --no-folding -d shared/home -t ~ ghostty git git-personal ssh ssh-personal zsh
-stow --no-folding -d work-macbook/home -t ~ ghostty ssh terraform vscode zsh
+stow --no-folding -d work-macbook/home -t ~ ghostty git ssh terraform vscode zsh
 ```
 
 ## VS Code
@@ -96,3 +96,18 @@ import-vscode-extensions
 ```shell
 git -C ~/Documents/Projects/dotfiles remote set-url origin git@github.com:marshallford/dotfiles.git
 ```
+
+## Client work
+
+Client repos live in `~/Documents/Work/<client>/`. The shared git config includes `~/.config/git/work` for that tree, and a repo there with no matching client refuses to commit. The files below are created by hand from the stowed `.example` templates.
+
+```shell
+cd ~/.config/git
+cp work.example work # one includeIf block per client
+cp work-CLIENT.example work-<client> # email, signing key, sshCommand
+cp allowed-signers-work.example allowed-signers-work # client signing keys, one comment line each
+ssh-keygen -t ed25519 -C "marshall@work-macbook" -f ~/.ssh/work-<client>
+ssh-keygen -t ed25519 -C "marshall@work-macbook" -f ~/.ssh/work-<client>-signing
+```
+
+Replace `CLIENT` and the example values in each copy, then add `work-<client>.pub` as an authentication key and `work-<client>-signing.pub` as a signing key on the client's SCM.

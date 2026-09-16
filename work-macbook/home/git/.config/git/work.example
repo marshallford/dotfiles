@@ -1,0 +1,14 @@
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  allowedSignersFile = ~/.config/git/allowed-signers-work
+
+[commit]
+  gpgSign = true
+
+[tag]
+  gpgSign = true
+
+[includeIf "gitdir:~/Documents/Work/CLIENT/"]
+  path = ~/.config/git/work-CLIENT

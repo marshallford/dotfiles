@@ -51,7 +51,7 @@
   path = ~/.gitconfig-github
 
 [includeIf "gitdir:~/Documents/Projects/"]
-  path = ~/.config/git/identity
+  path = ~/.config/git/personal
 
 [includeIf "gitdir:~/Documents/Work/"]
-  path = ~/.config/git/identity-work
+  path = ~/.config/git/work

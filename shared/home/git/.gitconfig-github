@@ -1,6 +1,3 @@
-# GitHub-only Configuration
-# This file is conditionally included from ~/.gitconfig
-
 [gpg]
   format = ssh
 

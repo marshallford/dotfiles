@@ -39,5 +39,6 @@
   "claudeCode.preferredLocation": "panel",
   "chat.disableAIFeatures": true,
   "chat.agent.enabled": false,
-  "claudeCode.hideOnboarding": true
+  "claudeCode.hideOnboarding": true,
+  "workbench.browser.openLocalhostLinks": false
 }

@@ -13,7 +13,12 @@ Create/edit configuration files:
 
 ### Required environment variables
 
-The service loads `/etc/restic-backup/restic-backup.env` via `EnvironmentFile=`.
+The service loads `/etc/restic-backup/restic-backup.env` via `EnvironmentFile=`. The file below is created by hand from the stowed `.example` template.
+
+```shell
+sudo cp /etc/restic-backup/restic-backup.env.example /etc/restic-backup/restic-backup.env
+sudo chmod 600 /etc/restic-backup/restic-backup.env
+```
 
 The script expects these variables to be set (depending on target):
 

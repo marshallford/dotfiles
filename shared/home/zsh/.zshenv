@@ -11,6 +11,7 @@ export TFENV_CONFIG_DIR="$HOME/.tfenv"
 typeset -U path PATH fpath FPATH
 
 [[ -r ${ZDOTDIR:-$HOME}/.zshenv.local ]] && source ${ZDOTDIR:-$HOME}/.zshenv.local
+[[ -r ${ZDOTDIR:-$HOME}/.zshenv.private ]] && source ${ZDOTDIR:-$HOME}/.zshenv.private
 
 # PATH
 [[ -d $HOME/.local/bin ]] && path=($HOME/.local/bin $path)

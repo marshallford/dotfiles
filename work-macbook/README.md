@@ -85,6 +85,15 @@ stow --no-folding -d shared/home -t ~ ghostty git git-personal ssh ssh-personal 
 stow --no-folding -d work-macbook/home -t ~ ghostty git ssh terraform vscode zsh
 ```
 
+## Secrets
+
+Secrets live in `~/.zshenv.private`. The shared [.zshenv](../shared/home/zsh/.zshenv) sources it last, so it overrides everything above. The file below is created by hand from the stowed `.example` template.
+
+```shell
+cp ~/.zshenv.private.example ~/.zshenv.private
+chmod 600 ~/.zshenv.private
+```
+
 ## VS Code
 
 ```shell

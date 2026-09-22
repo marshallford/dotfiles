@@ -1,0 +1,3 @@
+# Copy to ~/.zshenv.private and chmod 600. Never checked in: secrets, tokens,
+# client names, anything that should not leave this machine.
+export EXAMPLE_API_TOKEN='REPLACE_ME'

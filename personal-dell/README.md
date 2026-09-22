@@ -324,6 +324,15 @@ sudo stow --no-folding -d personal-dell/system -t / docker podman restic-backup
 stow --no-folding -d personal-dell/home -t ~ chromium desktop-applications dms ghostty niri pacman ssh terraform voxtype vscode xdg-defaults zsh
 ```
 
+## Secrets
+
+Secrets live in `~/.zshenv.private`. The shared [.zshenv](../shared/home/zsh/.zshenv) sources it last, so it overrides everything above. The file below is created by hand from the stowed `.example` template.
+
+```shell
+cp ~/.zshenv.private.example ~/.zshenv.private
+chmod 600 ~/.zshenv.private
+```
+
 ## Restore
 
 1. Restic: see [system/restic-backup](./system/restic-backup/README.md) for repo init, credentials, and NAS key

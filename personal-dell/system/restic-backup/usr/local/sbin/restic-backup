@@ -4,12 +4,21 @@ set -euo pipefail
 # This script intentionally does NOT source any env files.
 # Systemd should inject configuration via EnvironmentFile directives.
 
-run() {
-  local restic=(/usr/bin/restic -r "$1" -p "/etc/restic-backup/password.txt" --cache-dir "/var/cache/restic-backup")
+failed=()
 
-  "${restic[@]}" backup -x -H dell-pro-max-16-premium --tag arch-linux,laptop --files-from /etc/restic-backup/paths.txt --exclude-file /etc/restic-backup/excludes.txt
-  "${restic[@]}" forget --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6
-  "${restic[@]}" check
+run() {
+  local restic=(/usr/bin/restic -r "$2" -p "/etc/restic-backup/password.txt" --cache-dir "/var/cache/restic-backup")
+
+  # A failing target must not skip the next one, so errors are collected and
+  # reported at the end instead of aborting via set -e.
+  if ! {
+    "${restic[@]}" backup -x -H dell-pro-max-16-premium --tag arch-linux,laptop --files-from /etc/restic-backup/paths.txt --exclude-file /etc/restic-backup/excludes.txt &&
+    "${restic[@]}" forget --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6 &&
+    "${restic[@]}" check
+  }; then
+    echo "restic-backup: target '$1' failed" >&2
+    failed+=("$1")
+  fi
 }
 
 # Targets:
@@ -21,24 +30,29 @@ RESTIC_TARGETS="${RESTIC_TARGETS:-both}"
 case "$RESTIC_TARGETS" in
   nas)
     : "${RESTIC_REPOSITORY_NAS:?RESTIC_REPOSITORY_NAS must be set}"
-    run "$RESTIC_REPOSITORY_NAS"
+    run nas "$RESTIC_REPOSITORY_NAS"
     ;;
   b2)
     : "${RESTIC_REPOSITORY_B2:?RESTIC_REPOSITORY_B2 must be set}"
     : "${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID must be set}"
     : "${AWS_SECRET_ACCESS_KEY:?AWS_SECRET_ACCESS_KEY must be set}"
-    run "$RESTIC_REPOSITORY_B2"
+    run b2 "$RESTIC_REPOSITORY_B2"
     ;;
   both)
     : "${RESTIC_REPOSITORY_NAS:?RESTIC_REPOSITORY_NAS must be set}"
     : "${RESTIC_REPOSITORY_B2:?RESTIC_REPOSITORY_B2 must be set}"
     : "${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID must be set}"
     : "${AWS_SECRET_ACCESS_KEY:?AWS_SECRET_ACCESS_KEY must be set}"
-    run "$RESTIC_REPOSITORY_NAS"
-    run "$RESTIC_REPOSITORY_B2"
+    run nas "$RESTIC_REPOSITORY_NAS"
+    run b2 "$RESTIC_REPOSITORY_B2"
     ;;
   *)
     echo "Invalid RESTIC_TARGETS='$RESTIC_TARGETS' (expected: b2|nas|both)" >&2
     exit 2
     ;;
 esac
+
+if (( ${#failed[@]} )); then
+  echo "restic-backup: failed targets: ${failed[*]}" >&2
+  exit 1
+fi

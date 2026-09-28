@@ -58,6 +58,10 @@ defaults write com.apple.screencapture location -string "${HOME}/Pictures/Screen
 defaults write com.apple.screencapture type -string 'png'
 defaults write com.apple.screencapture disable-shadow -bool true
 
+# Power
+sudo pmset -c displaysleep 15 sleep 0
+sudo pmset -b displaysleep 15 sleep 60
+
 # Misc
 defaults write NSGlobalDomain AppleInterfaceStyle -string 'Dark'
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false

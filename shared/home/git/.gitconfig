@@ -11,6 +11,7 @@
 
 [branch]
   autoSetupMerge = simple
+  sort = committerdate
 
 [pull]
   rebase = true
@@ -34,6 +35,9 @@
 
 [merge]
   conflictstyle = zdiff3
+
+[help]
+  autocorrect = prompt
 
 [alias]
   st = status -sb

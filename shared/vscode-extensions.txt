@@ -5,6 +5,7 @@ grafana.vscode-jsonnet
 hashicorp.terraform
 matthewpi.caddyfile-support
 pomdtr.excalidraw-editor
+terrastruct.d2
 tsandall.opa
 vscode-icons-team.vscode-icons
 yzhang.markdown-all-in-one

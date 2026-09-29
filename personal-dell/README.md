@@ -296,7 +296,7 @@ DMS_PRIVESC=sudo dms auth sync # generates /etc/pam.d/dankshell for the lock scr
 ## CLI Applications
 
 ```shell
-yay -Sy ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq jpegoptim zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 fluxcd age sops cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
+yay -Sy ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq jpegoptim zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 google-cloud-cli fluxcd age sops cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}

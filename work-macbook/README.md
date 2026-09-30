@@ -111,12 +111,21 @@ git -C ~/Documents/Projects/dotfiles remote set-url origin git@github.com:marsha
 Client repos live in `~/Documents/Work/<client>/`. The shared git config includes `~/.config/git/work` for that tree, and a repo there with no matching client refuses to commit. The files below are created by hand from the stowed `.example` templates.
 
 ```shell
+ssh-keygen -t ed25519 -C "marshall@work-macbook" -f ~/.ssh/work-<client>
+ssh-keygen -t ed25519 -C "marshall@work-macbook" -f ~/.ssh/work-<client>-signing
+cut -d' ' -f1,2 ~/.ssh/work-<client>-signing.pub # key for allowed-signers-work
 cd ~/.config/git
 cp work.example work # one includeIf block per client
 cp work-CLIENT.example work-<client> # email, signing key, sshCommand
 cp allowed-signers-work.example allowed-signers-work # client signing keys, one comment line each
-ssh-keygen -t ed25519 -C "marshall@work-macbook" -f ~/.ssh/work-<client>
-ssh-keygen -t ed25519 -C "marshall@work-macbook" -f ~/.ssh/work-<client>-signing
 ```
 
 Replace `CLIENT` and the example values in each copy, then add `work-<client>.pub` as an authentication key and `work-<client>-signing.pub` as a signing key on the client's SCM.
+
+A client GitHub account needs a second `gh` login, completed in a browser signed in as that account. The active account is global, so switch before running `gh` in the client tree.
+
+```shell
+gh auth login --web --git-protocol ssh --skip-ssh-key
+gh auth status
+gh auth switch -u <user>
+```

@@ -21,6 +21,7 @@ git clone https://github.com/marshallford/dotfiles.git ~/Documents/Projects/dotf
 
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
+brew trust --formula platformersdev/tap/kubectl-x # third-party tap, trust the one formula
 brew bundle install --file=work-macbook/Brewfile
 brew bundle check --file=work-macbook/Brewfile # should report everything satisfied
 ```
@@ -44,6 +45,13 @@ colima start --cpu 4 --memory 8 --disk 60 --ssh-config=false
 ```
 
 `--ssh-config=false` stops Colima from writing `~/.ssh/config`, which would otherwise exist as a regular file and make the later stow abort.
+
+Start at login with the saved flags, then manage it via `brew services` only:
+
+```shell
+colima stop
+brew services start colima
+```
 
 Colima supplies the daemon only. `buildx` and `compose` are client-side CLI plugins that Homebrew installs outside the path Docker searches:
 

@@ -333,6 +333,12 @@ cp ~/.zshenv.private.example ~/.zshenv.private
 chmod 600 ~/.zshenv.private
 ```
 
+## Kubectl plugins
+
+```shell
+go install github.com/platformersdev/kubectl-x@latest
+```
+
 ## Restore
 
 1. Restic: see [system/restic-backup](./system/restic-backup/README.md) for repo init, credentials, and NAS key

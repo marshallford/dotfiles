@@ -4,3 +4,6 @@ export DOTFILES_MACHINE='work-macbook'
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export ANTIDOTE_FUNCTIONS="$HOMEBREW_PREFIX/share/antidote/functions"
+
+# PATH
+[[ -d $HOMEBREW_PREFIX/opt/rustup/bin ]] && path=($HOMEBREW_PREFIX/opt/rustup/bin $path) # keg-only, Homebrew links rustup but not the cargo/rustc proxies

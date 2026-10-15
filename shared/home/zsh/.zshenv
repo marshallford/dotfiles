@@ -16,3 +16,4 @@ typeset -U path PATH fpath FPATH
 # PATH
 [[ -d $HOME/.local/bin ]] && path=($HOME/.local/bin $path)
 [[ -d $GOPATH/bin ]] && path=($GOPATH/bin $path)
+[[ -d $HOME/.cargo/bin ]] && path=($HOME/.cargo/bin $path)

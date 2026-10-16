@@ -1,5 +1,6 @@
 # Taps
 tap "platformersdev/tap"
+tap "yuezk/gp-connect"
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
@@ -48,6 +49,8 @@ cask "ghostty"
 cask "google-chrome"
 cask "slack"
 cask "spotify"
+cask "swiftbar"
 cask "visual-studio-code"
 cask "windows-app"
+cask "yuezk/gp-connect/gp-connect"
 cask "zoom"

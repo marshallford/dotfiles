@@ -21,7 +21,8 @@ git clone https://github.com/marshallford/dotfiles.git ~/Documents/Projects/dotf
 
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
-brew trust --formula platformersdev/tap/kubectl-x # third-party tap, trust the one formula
+brew trust --formula platformersdev/tap/kubectl-x
+brew trust --cask yuezk/gp-connect/gp-connect
 brew bundle install --file=work-macbook/Brewfile
 brew bundle check --file=work-macbook/Brewfile # should report everything satisfied
 ```
@@ -32,6 +33,7 @@ brew bundle check --file=work-macbook/Brewfile # should report everything satisf
 
 ```shell
 ~/Documents/Projects/dotfiles/work-macbook/defaults.sh
+sed 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local # Touch ID for sudo
 ```
 
 Log out and back in afterwards. This machine is MDM enrolled, and `/Library/Managed Preferences` silently outranks anything written here; `ls /Library/Managed\ Preferences/*.plist` shows what MDM controls.
@@ -90,7 +92,7 @@ rm -f ~/.vscode/argv.json ~/Library/Application\ Support/Code/User/settings.json
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
 stow --no-folding -d shared/home -t ~ ghostty git git-personal ssh ssh-personal zsh
-stow --no-folding -d work-macbook/home -t ~ ghostty git ssh terraform vscode zsh
+stow --no-folding -d work-macbook/home -t ~ ghostty git ssh terraform vpn vscode zsh
 ```
 
 ## Secrets
@@ -137,3 +139,7 @@ gh auth login --web --git-protocol ssh --skip-ssh-key
 gh auth status
 gh auth switch -u <user>
 ```
+
+## VPN
+
+[home/vpn](home/vpn/README.md) sets up client GlobalProtect VPNs: SAML sign-in, local routes and DNS, a SwiftBar menu.

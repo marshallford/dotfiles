@@ -91,6 +91,7 @@ alias grep='grep --color=auto'
 alias g='git'
 alias k='kubectl'
 alias h='history 0 | grep -i'
+alias zsh-plugin-updater='antidote update -b && exec zsh'
 alias export-vscode-extensions="code --list-extensions | sort > $DOTFILES/shared/vscode-extensions.txt"
 alias import-vscode-extensions="xargs -L 1 code --install-extension < $DOTFILES/shared/vscode-extensions.txt"
 function lso { command ls -al "$@" | awk '$1~/^[-bcdlps][-r][-w][-xsS][-r][-w][-xsS][-r][-w][-xtT]/{k=0;for(i=0;i<9;i++){c=substr($1,10-i,1);if(c~/[rwxst]/)k+=2^i;if(i%3==0&&c~/[sStT]/)k+=2^(9+i/3)}printf "%04o ",k}{print}'; }

@@ -1,6 +1,6 @@
 # Aliases
-alias updater='brew update && brew upgrade'
-alias cleaner='brew autoremove && brew cleanup'
+alias system-updater='brew update && brew upgrade'
+alias system-cleaner='brew autoremove && brew cleanup'
 
 # GlobalProtect VPN functions, from the vpn package
 [[ -r ~/.config/zsh/vpn.zsh ]] && source ~/.config/zsh/vpn.zsh

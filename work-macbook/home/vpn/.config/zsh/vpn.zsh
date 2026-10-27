@@ -8,9 +8,15 @@ vpn-up() {
     --script "/usr/local/bin/vpn-slice --name vpn --domains-vpn-dns=${VPN_DNS_DOMAINS// /,} $VPN_ROUTES $VPN_HOSTS"
 }
 
-# Returns once gpclient has exited and vpn-slice has cleaned up
+# Returns once gpclient has exited and vpn-slice has cleaned up.
+# disconnect signals the PID in gpclient's lock file, which is only written after the SAML login,
+# so before then interrupt gpclient directly to cancel the login.
 vpn-down() {
-  sudo gpclient disconnect || return
+  if [[ -e /var/run/gpclient.lock ]]; then
+    sudo gpclient disconnect || return
+  else
+    sudo pkill -INT -x gpclient
+  fi
   while pgrep -q gpclient; do sleep 0.5; done
 }
 

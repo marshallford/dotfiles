@@ -38,5 +38,6 @@
   },
   "claudeCode.preferredLocation": "panel",
   "claudeCode.hideOnboarding": true,
-  "workbench.browser.openLocalhostLinks": false
+  "workbench.browser.openLocalhostLinks": false,
+  "sessions.chat.experimental.welcomeName": "Marshall"
 }

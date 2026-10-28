@@ -91,6 +91,7 @@ alias grep='grep --color=auto'
 alias g='git'
 alias k='kubectl'
 alias h='history 0 | grep -i'
+alias cpwd='print -rn -- $PWD | pbcopy'
 alias zsh-plugin-updater='antidote update -b && exec zsh'
 alias export-vscode-extensions="code --list-extensions | sort > $DOTFILES/shared/vscode-extensions.txt"
 alias import-vscode-extensions="xargs -L 1 code --install-extension < $DOTFILES/shared/vscode-extensions.txt"

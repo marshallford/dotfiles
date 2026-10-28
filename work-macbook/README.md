@@ -27,7 +27,7 @@ brew bundle install --file=work-macbook/Brewfile
 brew bundle check --file=work-macbook/Brewfile # should report everything satisfied
 ```
 
-`brew bundle cleanup --file=work-macbook/Brewfile` lists anything installed but not declared; add `--force` to remove it.
+Once the dotfiles are stowed, `HOMEBREW_BUNDLE_FILE` points at this Brewfile, so `brew bundle` needs no `--file` from any directory. `brew bundle cleanup` lists anything installed but not declared; add `--force` to remove it.
 
 ## macOS preferences
 

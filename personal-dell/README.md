@@ -277,7 +277,7 @@ voxtype setup check
 ## Shell/DE
 
 ```shell
-yay -S niri dms-shell dgop nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
+yay -S niri dux-shell dux-gop nautilus xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring xwayland-satellite libappindicator wl-clipboard cava i2c-tools matugen power-profiles-daemon qt6-multimedia-ffmpeg qt6ct wtype adw-gtk-theme cups-pk-helper kimageformats
 systemctl --user add-wants niri.service dms
 DMS_PRIVESC=sudo dms setup # may need to `rm -rf ~/.config/niri` first
 ```
@@ -285,18 +285,18 @@ DMS_PRIVESC=sudo dms setup # may need to `rm -rf ~/.config/niri` first
 ## Display/Login Manager
 
 ```shell
-yay -S greetd-dms-greeter-bin
+yay -S greetd dux-greeter-bin
 cd ~/Documents/Projects/dotfiles/personal-dell/system/setup
-sudo cp -r etc/{greetd,pam.d} /etc/
+sudo cp -r etc/pam.d /etc/
+DMS_PRIVESC=sudo dms-greeter enable # writes /etc/greetd/config.toml
 sudo systemctl enable --now greetd
 DMS_PRIVESC=sudo dms-greeter sync # adds ${USER} to the greeter group
-DMS_PRIVESC=sudo dms auth sync # generates /etc/pam.d/dankshell for the lock screen
 ```
 
 ## CLI Applications
 
 ```shell
-yay -S ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq d2 jpegoptim zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 google-cloud-cli fluxcd age sops bitwarden-cli cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
+yay -S ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq d2 jpegoptim yt-dlp zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 google-cloud-cli fluxcd age sops bitwarden-cli cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}

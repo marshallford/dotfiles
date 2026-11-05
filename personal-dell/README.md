@@ -263,7 +263,7 @@ sudo keyd check
 sudo systemctl enable --now keyd
 ```
 
-## Voice-to-Text (voxtype)
+## Voice-to-text (voxtype)
 
 ```shell
 yay -S voxtype-bin
@@ -282,7 +282,7 @@ systemctl --user add-wants niri.service dms
 DMS_PRIVESC=sudo dms setup # may need to `rm -rf ~/.config/niri` first
 ```
 
-## Display/Login Manager
+## Display/login manager
 
 ```shell
 yay -S greetd dux-greeter-bin
@@ -293,7 +293,7 @@ sudo systemctl enable --now greetd
 DMS_PRIVESC=sudo dms-greeter sync # adds ${USER} to the greeter group
 ```
 
-## CLI Applications
+## CLI applications
 
 ```shell
 yay -S ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq d2 jpegoptim yt-dlp zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 google-cloud-cli fluxcd age sops bitwarden-cli cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
@@ -333,10 +333,23 @@ cp ~/.zshenv.private.example ~/.zshenv.private
 chmod 600 ~/.zshenv.private
 ```
 
+## VS Code
+
+```shell
+import-vscode-extensions
+```
+
 ## Kubectl plugins
 
 ```shell
 go install github.com/platformersdev/kubectl-x@latest
+```
+
+## GitHub CLI
+
+```shell
+gh auth login --web --git-protocol ssh --skip-ssh-key
+gh extension install github/gh-actions-lock
 ```
 
 ## Restore

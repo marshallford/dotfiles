@@ -110,6 +110,13 @@ chmod 600 ~/.zshenv.private
 import-vscode-extensions
 ```
 
+## GitHub CLI
+
+```shell
+gh auth login --web --git-protocol ssh --skip-ssh-key
+gh extension install github/gh-actions-lock
+```
+
 ## Dotfiles remote
 
 ```shell

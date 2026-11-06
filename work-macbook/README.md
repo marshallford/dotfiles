@@ -83,15 +83,15 @@ ssh -T git@github.com
 
 ## Dotfiles
 
-VS Code writes `settings.json` and `argv.json` on first launch, so both exist as regular files and stow aborts the whole invocation rather than replace them. Remove them first.
+VS Code writes `settings.json` and `argv.json` on first launch, and Claude Code writes `~/.claude/settings.json`, so they exist as regular files and stow aborts the whole invocation rather than replace them. Remove them first.
 
 ```shell
-rm -f ~/.vscode/argv.json ~/Library/Application\ Support/Code/User/settings.json
+rm -f ~/.vscode/argv.json ~/Library/Application\ Support/Code/User/settings.json ~/.claude/settings.json
 ```
 
 ```shell
 cd ~/Documents/Projects/dotfiles # root of dotfiles repository
-stow --no-folding -d shared/home -t ~ ghostty git git-personal ssh ssh-personal zsh
+stow --no-folding -d shared/home -t ~ claude ghostty git git-personal ssh ssh-personal zsh
 stow --no-folding -d work-macbook/home -t ~ ghostty git ssh terraform vpn vscode zsh
 ```
 

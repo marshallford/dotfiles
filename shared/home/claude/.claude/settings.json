@@ -1,6 +1,11 @@
 {
+  "cleanupPeriodDays": 365,
   "model": "opus",
   "effortLevel": "high",
   "agentPushNotifEnabled": true,
-  "cleanupPeriodDays": 365
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  }
 }

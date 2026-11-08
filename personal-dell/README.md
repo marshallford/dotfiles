@@ -140,6 +140,7 @@ fwupdmgr get-updates
 fwupdmgr update
 systemctl enable --now fwupd-refresh.timer
 systemctl enable --now fstrim.timer
+systemctl enable --now systemd-timesyncd
 systemctl enable --now linux-modules-cleanup.service
 ```
 

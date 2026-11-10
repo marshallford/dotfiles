@@ -141,6 +141,7 @@ fwupdmgr update
 systemctl enable --now fwupd-refresh.timer
 systemctl enable --now fstrim.timer
 systemctl enable --now systemd-timesyncd
+systemctl enable --now btrfs-scrub@-.timer
 systemctl enable --now linux-modules-cleanup.service
 ```
 
@@ -238,10 +239,12 @@ systemctl --user enable --now ssh-agent.socket
 ## System tuning
 
 ```shell
-yay -S zram-generator thermald
+yay -S zram-generator thermald libnotify
 cd ~/Documents/Projects/dotfiles/personal-dell/system/setup
 sudo cp -r etc/systemd/{zram-generator.conf.d,oomd.conf.d,system.conf.d,user} /etc/systemd/
+sudo cp -r etc/systemd/system/{notify-failure@.service,btrfs-scrub@.service.d} /etc/systemd/system/
 sudo cp -r etc/{sysctl.d,tmpfiles.d} /etc/
+sudo systemctl daemon-reload
 sudo systemctl enable thermald systemd-oomd
 ```
 
@@ -297,7 +300,7 @@ DMS_PRIVESC=sudo dms-greeter sync # adds ${USER} to the greeter group
 ## CLI applications
 
 ```shell
-yay -S ethtool wavemon nmap bind pacman-contrib rsync ripgrep jq yq d2 jpegoptim yt-dlp zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 google-cloud-cli fluxcd age sops bitwarden-cli cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
+yay -S ethtool wavemon smartmontools nmap bind pacman-contrib rsync ripgrep jq yq d2 jpegoptim yt-dlp zsh-antidote zsh-pure-prompt restic github-cli kubectl kubelogin kustomize helm k9s aws-cli-v2 google-cloud-cli fluxcd age sops bitwarden-cli cosign tfenv rustup nvm go uv bats goreleaser-bin docker docker-buildx docker-compose podman kind istio cilium-cli ollama
 sudo usermod -aG tfenv ${USER}
 sudo systemctl enable --now docker.socket
 sudo usermod -aG docker ${USER}

@@ -1,0 +1,6 @@
+[Unit]
+Description=Desktop notification for failed %i
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'exec /usr/bin/systemd-run --user --machine=marshall@.host --quiet /usr/bin/notify-send --urgency=critical --app-name=systemd "%i failed" "$$(journalctl -u %i -n 20 -o cat --no-pager | grep -vF -- "%i: " | tail -n 5)"'

@@ -2,6 +2,7 @@
 Description=Restic Backup
 Wants=network-online.target
 After=network-online.target nss-lookup.target
+OnFailure=notify-failure@%n.service
 ConditionPathExists=/usr/bin/restic
 ConditionPathExists=/usr/local/sbin/%N
 ConditionPathExists=/etc/%N/password.txt
